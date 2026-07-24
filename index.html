@@ -173,8 +173,8 @@
     <p id="logDesc"></p>
     <div class="donerow" id="doneToggle"><div class="sw"></div><span>Completed</span></div>
     <div class="grid2" style="margin-top:16px">
-      <div><label>Distance (mi)</label><input type="number" inputmode="decimal" step="0.01" id="inDist" placeholder="0.00"></div>
-      <div><label>Time (mm:ss)</label><input type="text" inputmode="numeric" id="inTime" placeholder="35:04"></div>
+      <div><label>Distance (mi)</label><input type="text" inputmode="numeric" id="inDist" placeholder="0.00"></div>
+      <div><label>Time (h:mm:ss)</label><input type="text" inputmode="numeric" id="inTime" placeholder="0:00"></div>
     </div>
     <div class="paceview" id="paceView"></div>
     <label>Note</label>
@@ -278,9 +278,15 @@ function startFromRace(race){return addDays(race,-(TOTAL_DAYS-1));}
 function dayNumber(start,date){return Math.round((midnight(date)-midnight(start))/86400000);}
 function fmtDate(dt){return dt.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});}
 function fmtShort(dt){return dt.toLocaleDateString(undefined,{month:"short",day:"numeric"});}
-function parseTime(str){if(!str)return null;str=(""+str).trim();if(!str)return null;
-  const p=str.split(":").map(s=>parseInt(s,10));if(p.some(isNaN))return null;
-  if(p.length===1)return p[0]*60;if(p.length===2)return p[0]*60+p[1];return p[0]*3600+p[1]*60+p[2];}
+/* smart entry: digits only, read right-to-left. last 2 = seconds, next 2 = minutes, rest = hours.
+   "809" -> 8:09,  "3504" -> 35:04,  "80925" -> 8:09:25 */
+function secFromDigits(v){const d=(""+v).replace(/\D/g,"").slice(0,6);if(!d)return null;
+  const s=+d.slice(-2),m=+(d.length>2?d.slice(-4,-2):0),h=+(d.length>4?d.slice(0,-4):0);
+  return h*3600+m*60+s;}
+function maskTime(v){let d=(""+v).replace(/\D/g,"").slice(0,6);if(!d)return"";
+  const p=[];while(d.length>2){p.unshift(d.slice(-2));d=d.slice(0,-2);}p.unshift(d);return p.join(":");}
+/* mileage: digits only, last 2 are always the decimals. "461" -> 4.61,  "5" -> 0.05 */
+function maskDist(v){const d=(""+v).replace(/\D/g,"");if(!d)return"";return (parseInt(d,10)/100).toFixed(2);}
 function fmtTime(sec){if(sec==null)return"";sec=Math.round(sec);
   const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;
   return h>0?`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`:`${m}:${String(s).padStart(2,"0")}`;}
@@ -455,15 +461,15 @@ const inDist=document.getElementById("inDist"),inTime=document.getElementById("i
 let editKey=null;
 
 function updatePaceView(){
-  const dist=parseFloat(inDist.value),sec=parseTime(inTime.value);
+  const dist=parseFloat(inDist.value),sec=secFromDigits(inTime.value);
   if(!(dist&&sec)){paceView.innerHTML="";return;}
   const pj=projMarathon(sec,dist);
   paceView.innerHTML=`Pace <b>${fmtPace(sec,dist)}</b> /mi`+
     `<div class="proj">Hold this pace → <b>${fmtTime(pj.linear)}</b> marathon`+
     `<span class="pred">≈ ${fmtTime(pj.riegel)} realistic (fatigue-adjusted)</span></div>`;
 }
-inDist.addEventListener("input",updatePaceView);
-inTime.addEventListener("input",updatePaceView);
+inDist.addEventListener("input",()=>{inDist.value=maskDist(inDist.value);updatePaceView();});
+inTime.addEventListener("input",()=>{inTime.value=maskTime(inTime.value);updatePaceView();});
 doneToggle.addEventListener("click",()=>doneToggle.classList.toggle("on"));
 
 function openLog(w,d){
@@ -479,7 +485,7 @@ function openLog(w,d){
   logSheet.classList.remove("hidden");
 }
 document.getElementById("logSave").addEventListener("click",()=>{
-  const log=getLog(),dist=parseFloat(inDist.value),sec=parseTime(inTime.value),note=inNote.value.trim();
+  const log=getLog(),dist=parseFloat(inDist.value),sec=secFromDigits(inTime.value),note=inNote.value.trim();
   const en={done:doneToggle.classList.contains("on")};
   if(!isNaN(dist)&&dist>0)en.dist=Math.round(dist*100)/100;
   if(sec)en.timeSec=sec;
