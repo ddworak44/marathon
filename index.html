@@ -36,6 +36,8 @@
   .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
   .top .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.02em}
   .top .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+  .countdown{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin:5px 0 0 18px}
+  .countdown b{color:var(--accent);font-weight:800;font-size:14px}
   .iconbtn{width:38px;height:38px;border-radius:11px;background:var(--card);display:grid;place-items:center;font-size:17px;color:var(--dim)}
   .iconbtn:active{background:var(--card2)}
 
@@ -89,6 +91,7 @@
   .week>.wh:active{background:var(--card2)}
   .week .wh .wl{font-size:14px;font-weight:700;display:flex;align-items:center;flex-wrap:wrap}
   .week .wh .wl small{color:var(--dim2);font-weight:500;margin-left:7px;font-size:12px}
+  .week .wh .wl small .lg{color:var(--accent);font-weight:700}
   .badge{font-size:9px;font-weight:800;letter-spacing:.08em;padding:2px 6px;border-radius:6px;text-transform:uppercase;margin-left:8px}
   .badge.now{background:var(--accent);color:#06210f}
   .badge.next{background:#2a2a36;color:var(--dim)}
@@ -143,14 +146,17 @@
 <body>
 
 <div class="top">
-  <div class="brand"><span class="dot"></span>Marathon · Advanced 2</div>
+  <div>
+    <div class="brand"><span class="dot"></span>Marathon · Advanced 2</div>
+    <div class="countdown" id="countdown"></div>
+  </div>
   <button class="iconbtn" id="settingsBtn" aria-label="Settings">⚙</button>
 </div>
 
 <div id="app"></div>
 
 <div class="footnote">
-  Hal Higdon Advanced 2 · 18-week plan<br>
+  Hal Higdon Advanced 2 · Weeks 4–18<br>
   Progress saved on this device · works offline
 </div>
 
@@ -211,6 +217,7 @@ const GRID = [
 ];
 const DNAMES = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const TOTAL_DAYS = 18*7;
+const START_WEEK = 3; // 0-based: skip weeks 1–3, plan shown/counted from Week 4 on
 
 /* seed: runs already completed (Week 4 = index 3) — key "w-d", w & d 0-based */
 const SEED = {
@@ -273,6 +280,11 @@ function fmtTime(sec){if(sec==null)return"";sec=Math.round(sec);
   return h>0?`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`:`${m}:${String(s).padStart(2,"0")}`;}
 function fmtPace(timeSec,dist){if(!timeSec||!dist)return"";const p=timeSec/dist,m=Math.floor(p/60),s=Math.round(p%60);
   return `${m}:${String(s).padStart(2,"0")}`;}
+function fmtMi(x){return (+x.toFixed(1)).toString();}
+/* planned miles for a workout label (tempo/interval days have no listed distance → 0) */
+function plannedMiles(label){const s=label.toLowerCase();
+  const m=s.match(/(\d+(?:\.\d+)?)\s*mi\b/);if(m)return parseFloat(m[1]);
+  if(s.includes("half marathon"))return 13.1;if(s==="marathon")return 26.2;return 0;}
 
 /* ---------- render ---------- */
 const app=document.getElementById("app");
@@ -283,9 +295,15 @@ function render(){
   const n=dayNumber(start,today), log=getLog();
   CUR_N=n; START=start;
 
+  // countdown to race day
+  const daysToRace=dayNumber(today,race), cd=document.getElementById("countdown");
+  if(daysToRace>0)cd.innerHTML=`Days until race · <b>${daysToRace}</b>`;
+  else if(daysToRace===0)cd.innerHTML=`<b>Race day 🎉</b>`;
+  else cd.innerHTML=`Race day passed`;
+
   // totals
   let totalWk=0,doneWk=0,totalMi=0;
-  for(let w=0;w<18;w++)for(let d=0;d<7;d++){
+  for(let w=START_WEEK;w<18;w++)for(let d=0;d<7;d++){
     const c=classify(GRID[w][d]),e=log[key(w,d)];
     if(e&&e.dist)totalMi+=Number(e.dist);
     if(c.t==="rest")continue;totalWk++;if(e&&e.done)doneWk++;
@@ -294,7 +312,7 @@ function render(){
 
   // streak
   let streak=0;
-  for(let i=Math.min(n,TOTAL_DAYS-1);i>=0;i--){
+  for(let i=Math.min(n,TOTAL_DAYS-1);i>=START_WEEK*7;i--){
     if(i>n)continue;const w=Math.floor(i/7),d=i%7,c=classify(GRID[w][d]);
     if(c.t==="rest")continue;const e=log[key(w,d)];
     if(e&&e.done)streak++;else break;
@@ -308,7 +326,7 @@ function render(){
     html+=`<div class="today"><div class="accentbar" style="background:var(--rest)"></div>
       <div class="meta">Countdown</div><div class="date">Plan starts ${fmtDate(start)}</div>
       <div class="workout">${days} day${days>1?"s":""} to go</div>
-      <div class="sub">Week 1 begins soon. First workout: <b>${GRID[0][0]}</b>.</div></div>`;
+      <div class="sub">Week ${START_WEEK+1} begins soon. First workout: <b>${GRID[START_WEEK][0]}</b>.</div></div>`;
   } else if(n>=TOTAL_DAYS){
     html+=`<div class="today"><div class="accentbar" style="background:var(--race)"></div>
       <div class="meta">Complete</div><div class="workout">Plan finished 🎉</div>
@@ -345,10 +363,16 @@ function render(){
   // schedule
   html+=`<div class="sec"><h2>Full schedule</h2><span class="hint">tap a day to log · circle to toggle</span></div>`;
   const curW=(n>=0&&n<TOTAL_DAYS)?Math.floor(n/7):(n<0?-1:18);
-  for(let w=0;w<18;w++){
-    let wt=0,wd=0;
-    for(let d=0;d<7;d++){const c=classify(GRID[w][d]);if(c.t==="rest")continue;wt++;if((log[key(w,d)]||{}).done)wd++;}
+  for(let w=START_WEEK;w<18;w++){
+    let wt=0,wd=0,plannedMi=0,loggedMi=0;
+    for(let d=0;d<7;d++){
+      const c=classify(GRID[w][d]),e=log[key(w,d)]||{};
+      plannedMi+=plannedMiles(GRID[w][d]);
+      if(e.dist)loggedMi+=Number(e.dist);
+      if(c.t==="rest")continue;wt++;if(e.done)wd++;
+    }
     const wpct=wt?Math.round(wd/wt*100):0;
+    const mileLabel=loggedMi>0?`<span class="lg">${fmtMi(loggedMi)}</span>/${fmtMi(plannedMi)} mi`:`${fmtMi(plannedMi)} mi`;
     const isNow=w===curW, isPast=w<curW, open=isNow;
     let badge="";
     if(w===curW)badge=`<span class="badge now">This week</span>`;
@@ -356,7 +380,7 @@ function render(){
     else if(w===curW+1)badge=`<span class="badge next">Next week</span>`;
     html+=`<div class="week ${isNow?'now':''} ${isPast?'past':''}" data-week="${w}">
       <div class="wh" data-toggleweek="${w}">
-        <div class="wl">Week ${w+1}${badge}<small>${fmtShort(addDays(start,w*7))}–${fmtShort(addDays(start,w*7+6))}</small></div>
+        <div class="wl">Week ${w+1}${badge}<small>${fmtShort(addDays(start,w*7))}–${fmtShort(addDays(start,w*7+6))} · ${mileLabel}</small></div>
         <div class="wr"><span>${wd}/${wt}</span><span class="minibar"><i style="width:${wpct}%"></i></span><span>${open?'▾':'▸'}</span></div>
       </div><div class="days ${open?'':'hidden'}">`;
     for(let d=0;d<7;d++){
