@@ -129,6 +129,12 @@
   .grid2 label{margin-top:0}
   .paceview{margin-top:12px;font-size:14px;color:var(--dim);text-align:center}
   .paceview b{color:var(--accent);font-size:18px}
+  .paceview .proj{margin-top:9px;font-size:13px;color:var(--dim)}
+  .paceview .proj b{color:var(--accent);font-size:16px}
+  .paceview .pred{display:block;margin-top:2px;color:var(--dim2);font-size:12px}
+  .actual .proj{font-size:13px;color:var(--dim);margin-top:10px;padding-top:9px;border-top:1px solid var(--line);line-height:1.5}
+  .actual .proj b{color:var(--accent)}
+  .actual .proj .pred{display:block;margin-top:2px;color:var(--dim2);font-size:12px}
   .donerow{display:flex;align-items:center;gap:12px;margin-top:16px;padding:13px;border:1px solid var(--line);border-radius:13px;background:#0f0f15}
   .donerow .sw{width:46px;height:28px;border-radius:99px;background:#2a2a36;position:relative;flex:none;transition:.15s}
   .donerow .sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.15s}
@@ -281,6 +287,10 @@ function fmtTime(sec){if(sec==null)return"";sec=Math.round(sec);
 function fmtPace(timeSec,dist){if(!timeSec||!dist)return"";const p=timeSec/dist,m=Math.floor(p/60),s=Math.round(p%60);
   return `${m}:${String(s).padStart(2,"0")}`;}
 function fmtMi(x){return (+x.toFixed(1)).toString();}
+const MARATHON_MI=26.2188;
+/* project a run to a full marathon: linear = same pace held; riegel = fatigue-adjusted race equivalent */
+function projMarathon(timeSec,dist){if(!timeSec||!dist)return null;
+  return {linear:timeSec/dist*MARATHON_MI, riegel:timeSec*Math.pow(MARATHON_MI/dist,1.06)};}
 /* planned miles for a workout label (tempo/interval days have no listed distance → 0) */
 function plannedMiles(label){const s=label.toLowerCase();
   const m=s.match(/(\d+(?:\.\d+)?)\s*mi\b/);if(m)return parseFloat(m[1]);
@@ -411,7 +421,9 @@ function actualBlock(e){
   if(e.dist)cells+=`<div><span class="big">${Number(e.dist).toFixed(2)}</span><span class="u">mi</span></div>`;
   if(e.timeSec)cells+=`<div><span class="big">${fmtTime(e.timeSec)}</span><span class="u">time</span></div>`;
   if(pace)cells+=`<div><span class="big">${pace}</span><span class="u">/mi</span></div>`;
-  return `<div class="actual">${cells?`<div class="row">${cells}</div>`:""}${e.note?`<div class="note">${escapeHtml(e.note)}</div>`:""}</div>`;
+  const pj=projMarathon(e.timeSec,e.dist);
+  const proj=pj?`<div class="proj">At this pace → <b>${fmtTime(pj.linear)}</b> marathon<span class="pred">≈ ${fmtTime(pj.riegel)} realistic (fatigue-adjusted)</span></div>`:"";
+  return `<div class="actual">${cells?`<div class="row">${cells}</div>`:""}${proj}${e.note?`<div class="note">${escapeHtml(e.note)}</div>`:""}</div>`;
 }
 function escapeHtml(s){return (""+s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));}
 
@@ -444,7 +456,11 @@ let editKey=null;
 
 function updatePaceView(){
   const dist=parseFloat(inDist.value),sec=parseTime(inTime.value);
-  paceView.innerHTML=(dist&&sec)?`Pace <b>${fmtPace(sec,dist)}</b> /mi`:"";
+  if(!(dist&&sec)){paceView.innerHTML="";return;}
+  const pj=projMarathon(sec,dist);
+  paceView.innerHTML=`Pace <b>${fmtPace(sec,dist)}</b> /mi`+
+    `<div class="proj">Hold this pace → <b>${fmtTime(pj.linear)}</b> marathon`+
+    `<span class="pred">≈ ${fmtTime(pj.riegel)} realistic (fatigue-adjusted)</span></div>`;
 }
 inDist.addEventListener("input",updatePaceView);
 inTime.addEventListener("input",updatePaceView);
