@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Marathon</title>
+
+<!-- Home-screen / PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Marathon">
+<meta name="theme-color" content="#0b0b0f">
+<link rel="apple-touch-icon" href="icon.svg">
+
+<style>
+  :root{
+    --bg:#0b0b0f; --card:#16161d; --card2:#1e1e28; --line:#2a2a36;
+    --txt:#f4f4f6; --dim:#9a9aab; --dim2:#6a6a78;
+    --accent:#4ade80;      /* done / go */
+    --easy:#60a5fa; --pace:#f59e0b; --tempo:#f472b6;
+    --speed:#a78bfa; --long:#fb7185; --rest:#6a6a78; --race:#4ade80;
+    --safe-t:env(safe-area-inset-top); --safe-b:env(safe-area-inset-bottom);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased}
+  body{padding:calc(var(--safe-t) + 14px) 16px calc(var(--safe-b) + 40px);
+    max-width:560px;margin:0 auto;min-height:100vh}
+  h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.02em}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  .hidden{display:none!important}
+
+  /* header */
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .top .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px;letter-spacing:-.02em}
+  .top .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+  .iconbtn{width:38px;height:38px;border-radius:11px;background:var(--card);display:grid;place-items:center;font-size:17px;color:var(--dim)}
+  .iconbtn:active{background:var(--card2)}
+
+  /* today card */
+  .today{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);
+    border-radius:22px;padding:20px;position:relative;overflow:hidden}
+  .today .accentbar{position:absolute;left:0;top:0;bottom:0;width:5px}
+  .today .meta{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+  .today .date{font-size:12.5px;color:var(--dim2);margin-top:2px}
+  .today .workout{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.1;margin:14px 0 4px}
+  .today .sub{font-size:14px;color:var(--dim);line-height:1.4}
+  .today .tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:.06em;margin-top:12px}
+
+  .doneBtn{margin-top:18px;width:100%;padding:15px;border-radius:15px;font-size:16px;font-weight:700;
+    background:#242432;color:var(--txt);display:flex;align-items:center;justify-content:center;gap:9px;
+    transition:transform .08s ease,background .15s ease}
+  .doneBtn:active{transform:scale(.985)}
+  .doneBtn.done{background:var(--accent);color:#06210f}
+  .doneBtn .chk{width:22px;height:22px;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center;font-size:13px}
+  .doneBtn.done .chk{background:#06210f;color:var(--accent);border-color:#06210f}
+
+  /* stats row */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 12px;text-align:center}
+  .stat .n{font-size:22px;font-weight:800;letter-spacing:-.02em}
+  .stat .l{font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
+
+  /* progress bar */
+  .prog{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px}
+  .prog .head{display:flex;justify-content:space-between;font-size:13px;color:var(--dim);margin-bottom:9px}
+  .prog .head b{color:var(--txt)}
+  .bar{height:9px;border-radius:99px;background:#2a2a36;overflow:hidden}
+  .bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),#22d3ee);transition:width .4s ease}
+
+  /* section title */
+  .sec{display:flex;align-items:center;justify-content:space-between;margin:26px 4px 12px}
+  .sec h2{font-size:16px}
+  .sec .hint{font-size:12px;color:var(--dim2)}
+
+  /* week block */
+  .week{margin-bottom:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .week>.wh{display:flex;align-items:center;justify-content:space-between;padding:13px 15px}
+  .week>.wh:active{background:var(--card2)}
+  .week .wh .wl{font-size:14px;font-weight:700}
+  .week .wh .wl small{color:var(--dim2);font-weight:500;margin-left:7px;font-size:12px}
+  .week .wh .wr{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim)}
+  .minibar{width:52px;height:6px;border-radius:99px;background:#2a2a36;overflow:hidden}
+  .minibar>i{display:block;height:100%;background:var(--accent)}
+  .days{border-top:1px solid var(--line)}
+  .day{display:flex;align-items:center;gap:12px;padding:11px 15px;border-top:1px solid #23232e}
+  .day:first-child{border-top:none}
+  .day.today{background:rgba(74,222,128,.06)}
+  .day .dname{width:34px;font-size:11px;font-weight:700;color:var(--dim2);text-transform:uppercase}
+  .day.today .dname{color:var(--accent)}
+  .day .dw{flex:1;font-size:14px}
+  .day .dw .dt{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:8px;vertical-align:middle}
+  .check{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;
+    font-size:14px;color:transparent;flex:none;transition:.12s}
+  .check.on{background:var(--accent);border-color:var(--accent);color:#06210f}
+  .check.rest{border-style:dashed;opacity:.5}
+
+  /* onboarding / settings sheet */
+  .sheet{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);
+    display:grid;place-items:center;padding:20px;z-index:50}
+  .sheet .box{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;width:100%;max-width:400px}
+  .sheet h3{font-size:20px;margin-bottom:6px}
+  .sheet p{color:var(--dim);font-size:14px;line-height:1.5;margin:0 0 18px}
+  .sheet label{display:block;font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 7px}
+  .sheet input[type=date]{width:100%;padding:13px;border-radius:13px;background:#0f0f15;border:1px solid var(--line);
+    color:var(--txt);font-size:16px;font-family:inherit}
+  .sheet .primary{margin-top:20px;width:100%;padding:14px;border-radius:14px;background:var(--accent);color:#06210f;font-weight:800;font-size:16px}
+  .sheet .ghost{margin-top:10px;width:100%;padding:12px;border-radius:14px;background:transparent;color:var(--dim);font-size:14px}
+  .sheet .danger{color:#f87171}
+  .info{background:#0f0f15;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:12.5px;color:var(--dim);line-height:1.5}
+
+  .footnote{text-align:center;color:var(--dim2);font-size:11.5px;margin-top:28px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand"><span class="dot"></span>Marathon · Advanced 2</div>
+  <button class="iconbtn" id="settingsBtn" aria-label="Settings">⚙</button>
+</div>
+
+<div id="app"></div>
+
+<div class="footnote">
+  Hal Higdon Advanced 2 · 18-week plan<br>
+  Progress saved on this device · works offline
+</div>
+
+<!-- Settings / onboarding sheet -->
+<div class="sheet hidden" id="sheet">
+  <div class="box">
+    <h3 id="sheetTitle">Set your race date</h3>
+    <p id="sheetDesc">Tell me when your marathon is. The 18-week plan counts backward from that Sunday.</p>
+    <label>Race day (your marathon)</label>
+    <input type="date" id="raceInput">
+    <div class="info" id="dateInfo" style="margin-top:14px"></div>
+    <button class="primary" id="saveBtn">Save plan</button>
+    <button class="ghost" id="closeBtn">Cancel</button>
+    <button class="ghost danger" id="resetBtn">Reset all progress</button>
+  </div>
+</div>
+
+<script>
+/* ---------- data: Hal Higdon Advanced 2, [Mon..Sun] ---------- */
+const GRID = [
+  ["3 mi run","3 x hill","3 mi run","30 min tempo","Rest","5 mi pace","10 mi long run"],
+  ["3 mi run","30 min tempo","3 mi run","3 mi pace","Rest","5 mi run","11 mi long run"],
+  ["3 mi run","4 x 800","3 mi run","30 min tempo","Rest","6 mi pace","8 mi long run"],
+  ["3 mi run","4 x hill","3 mi run","35 min tempo","Rest","6 mi pace","13 mi long run"],
+  ["3 mi run","35 min tempo","3 mi run","3 mi pace","Rest","7 mi run","14 mi long run"],
+  ["3 mi run","5 x 800","3 mi run","35 min tempo","Rest","7 mi pace","10 mi long run"],
+  ["3 mi run","5 x hill","4 mi run","40 min tempo","Rest","8 mi pace","16 mi long run"],
+  ["3 mi run","40 min tempo","4 mi run","3 mi pace","Rest","8 mi run","17 mi long run"],
+  ["4 mi run","6 x 800","4 mi run","40 min tempo","Rest","Rest","Half Marathon"],
+  ["3 mi run","6 x hill","4 mi run","45 min tempo","Rest","9 mi pace","19 mi long run"],
+  ["4 mi run","45 min tempo","5 mi run","4 mi pace","Rest","10 mi run","20 mi long run"],
+  ["4 mi run","7 x 800","5 mi run","45 min tempo","Rest","6 mi pace","12 mi long run"],
+  ["4 mi run","7 x hill","5 mi run","50 min tempo","Rest","10 mi pace","20 mi long run"],
+  ["5 mi run","45 min tempo","5 mi run","5 mi pace","Rest","6 mi run","12 mi long run"],
+  ["5 mi run","8 x 800","5 mi run","40 min tempo","Rest","10 mi pace","20 mi long run"],
+  ["5 mi run","6 x hill","5 mi run","30 min tempo","Rest","4 mi pace","12 mi long run"],
+  ["4 mi run","30 min tempo","4 mi run","4 mi pace","Rest","4 mi run","8 mi long run"],
+  ["3 mi run","4 x 400","3 mi run","Rest","Rest","2 mi run","Marathon"],
+];
+const DNAMES = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const TOTAL_DAYS = 18*7; // 126
+
+/* ---------- classify a workout for color + description ---------- */
+function classify(w){
+  const s=w.toLowerCase();
+  if(s.includes("half marathon")) return {t:"race",c:"var(--race)",label:"Tune-up race",desc:"Race a half marathon — great fitness test, run it hard."};
+  if(s==="marathon") return {t:"race",c:"var(--race)",label:"RACE DAY",desc:"This is it. 26.2 miles. Trust the training."};
+  if(s.includes("rest")) return {t:"rest",c:"var(--rest)",label:"Rest",desc:"Full recovery. No running today — let the work sink in."};
+  if(s.includes("pace")) return {t:"pace",c:"var(--pace)",label:"Marathon pace",desc:"Run at your goal marathon pace — smooth and controlled."};
+  if(s.includes("tempo")) return {t:"tempo",c:"var(--tempo)",label:"Tempo",desc:"Sustained hard effort — comfortably uncomfortable."};
+  if(s.includes("hill")) return {t:"speed",c:"var(--speed)",label:"Hill repeats",desc:"Hard uphill reps, jog down to recover. Builds strength + power."};
+  if(s.includes("x 800")||s.includes("x 400")) return {t:"speed",c:"var(--speed)",label:"Track intervals",desc:"Fast repeats with jog recovery. Push the pace."};
+  if(s.includes("long run")) return {t:"long",c:"var(--long)",label:"Long run",desc:"Easy, conversational pace. The cornerstone of the week."};
+  return {t:"easy",c:"var(--easy)",label:"Easy run",desc:"Relaxed, easy effort. Recovery miles."};
+}
+
+/* ---------- storage ---------- */
+const LS_RACE="marathon_raceDate", LS_DONE="marathon_done";
+const DEFAULT_RACE="2026-11-01"; // NYC Marathon — plan back-calculates from here
+function getRace(){const v=localStorage.getItem(LS_RACE)||DEFAULT_RACE;return parseDate(v);}
+function getDone(){try{return JSON.parse(localStorage.getItem(LS_DONE)||"{}");}catch(e){return{};}}
+function setDone(d){localStorage.setItem(LS_DONE,JSON.stringify(d));}
+function key(w,d){return w+"-"+d;}
+
+/* ---------- date helpers (local, midnight) ---------- */
+function parseDate(iso){const[y,m,d]=iso.split("-").map(Number);return new Date(y,m-1,d);}
+function toISO(dt){return dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0");}
+function midnight(dt){return new Date(dt.getFullYear(),dt.getMonth(),dt.getDate());}
+function addDays(dt,n){const x=new Date(dt);x.setDate(x.getDate()+n);return x;}
+function startFromRace(race){return addDays(race,-(TOTAL_DAYS-1));} // week1 Monday
+function dayNumber(start,date){return Math.round((midnight(date)-midnight(start))/86400000);}
+function fmtDate(dt){return dt.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});}
+function fmtShort(dt){return dt.toLocaleDateString(undefined,{month:"short",day:"numeric"});}
+
+/* ---------- render ---------- */
+const app=document.getElementById("app");
+
+function render(){
+  const race=getRace();
+  if(!race){openSheet(true);app.innerHTML="";return;}
+  const start=startFromRace(race);
+  const today=midnight(new Date());
+  const n=dayNumber(start,today);           // 0..125 within plan
+  const done=getDone();
+
+  // ----- progress totals -----
+  let totalWk=0,doneWk=0;
+  for(let w=0;w<18;w++)for(let d=0;d<7;d++){
+    const c=classify(GRID[w][d]);
+    if(c.t==="rest")continue;
+    totalWk++;
+    if(done[key(w,d)])doneWk++;
+  }
+  const pct=totalWk?Math.round(doneWk/totalWk*100):0;
+
+  // ----- streak (consecutive days up to today; rest auto-counts) -----
+  let streak=0;
+  for(let i=Math.min(n,TOTAL_DAYS-1);i>=0;i--){
+    const w=Math.floor(i/7),d=i%7,c=classify(GRID[w][d]);
+    if(i>n)continue;
+    if(c.t==="rest"){continue;}
+    if(done[key(w,d)])streak++;else break;
+  }
+
+  // ----- today card -----
+  let html="";
+  if(n<0){
+    const days=-n;
+    html+=`<div class="today"><div class="accentbar" style="background:var(--rest)"></div>
+      <div class="meta">Countdown</div>
+      <div class="date">Plan starts ${fmtDate(start)}</div>
+      <div class="workout">${days} day${days>1?"s":""} to go</div>
+      <div class="sub">Week 1 begins soon. First workout: <b>${GRID[0][0]}</b>.</div></div>`;
+  } else if(n>=TOTAL_DAYS){
+    html+=`<div class="today"><div class="accentbar" style="background:var(--race)"></div>
+      <div class="meta">Complete</div>
+      <div class="workout">Plan finished 🎉</div>
+      <div class="sub">${doneWk} of ${totalWk} workouts logged. Hope the race went well!</div></div>`;
+  } else {
+    const w=Math.floor(n/7),d=n%7,label=GRID[w][d],c=classify(label);
+    const isDone=!!done[key(w,d)];
+    const isRest=c.t==="rest";
+    html+=`<div class="today"><div class="accentbar" style="background:${c.c}"></div>
+      <div class="meta">Week ${w+1} · Day ${d+1} · ${DNAMES[d]}</div>
+      <div class="date">${fmtDate(today)}</div>
+      <div class="workout">${label}</div>
+      <div class="sub">${c.desc}</div>
+      <div class="tag" style="background:${c.c}22;color:${c.c}">${c.label}</div>`;
+    if(isRest){
+      html+=`<div class="doneBtn ${isDone?'done':''}" style="cursor:default;opacity:.85">
+        <span class="chk">✓</span> Rest day — nothing to log</div>`;
+    } else {
+      html+=`<button class="doneBtn ${isDone?'done':''}" data-w="${w}" data-d="${d}">
+        <span class="chk">✓</span> ${isDone?"Done — nice work":"Mark today complete"}</button>`;
+    }
+    html+=`</div>`;
+  }
+
+  // ----- stats -----
+  const weekNow=(n>=0&&n<TOTAL_DAYS)?Math.floor(n/7)+1:(n<0?0:18);
+  html+=`<div class="stats">
+    <div class="stat"><div class="n">${weekNow||"–"}</div><div class="l">Week</div></div>
+    <div class="stat"><div class="n">${streak}</div><div class="l">Day streak</div></div>
+    <div class="stat"><div class="n">${doneWk}</div><div class="l">Workouts done</div></div>
+  </div>`;
+
+  // ----- overall progress -----
+  html+=`<div class="prog">
+    <div class="head"><span>Overall progress</span><span><b>${pct}%</b></span></div>
+    <div class="bar"><i style="width:${pct}%"></i></div>
+  </div>`;
+
+  // ----- full schedule -----
+  html+=`<div class="sec"><h2>Full schedule</h2><span class="hint">tap any day to toggle</span></div>`;
+  const curW=(n>=0&&n<TOTAL_DAYS)?Math.floor(n/7):-1;
+  for(let w=0;w<18;w++){
+    let wt=0,wd=0;
+    for(let d=0;d<7;d++){const c=classify(GRID[w][d]);if(c.t==="rest")continue;wt++;if(done[key(w,d)])wd++;}
+    const wpct=wt?Math.round(wd/wt*100):0;
+    const open=(w===curW);
+    html+=`<div class="week" data-week="${w}">
+      <div class="wh" data-toggle="${w}">
+        <div class="wl">Week ${w+1}<small>${fmtShort(addDays(start,w*7))} – ${fmtShort(addDays(start,w*7+6))}</small></div>
+        <div class="wr"><span>${wd}/${wt}</span><span class="minibar"><i style="width:${wpct}%"></i></span><span>${open?'▾':'▸'}</span></div>
+      </div>
+      <div class="days ${open?'':'hidden'}">`;
+    for(let d=0;d<7;d++){
+      const label=GRID[w][d],c=classify(label);
+      const dayN=w*7+d,isToday=(dayN===n);
+      const isDone=!!done[key(w,d)],isRest=c.t==="rest";
+      html+=`<div class="day ${isToday?'today':''}">
+        <span class="dname">${DNAMES[d]}</span>
+        <span class="dw"><span class="dt" style="background:${c.c}"></span>${label}</span>
+        <span class="check ${isRest?'rest':''} ${isDone?'on':''}" ${isRest?'':`data-w="${w}" data-d="${d}"`}>✓</span>
+      </div>`;
+    }
+    html+=`</div></div>`;
+  }
+
+  app.innerHTML=html;
+
+  // wire toggles
+  app.querySelectorAll("[data-toggle]").forEach(el=>el.addEventListener("click",()=>{
+    const wk=el.getAttribute("data-toggle");
+    const box=app.querySelector(`.week[data-week="${wk}"] .days`);
+    box.classList.toggle("hidden");
+    el.querySelector(".wr span:last-child").textContent=box.classList.contains("hidden")?"▸":"▾";
+  }));
+  app.querySelectorAll("[data-w][data-d]").forEach(el=>el.addEventListener("click",e=>{
+    e.stopPropagation();
+    const w=el.getAttribute("data-w"),d=el.getAttribute("data-d");
+    const dn=getDone();const k=key(w,d);
+    if(dn[k])delete dn[k];else dn[k]=true;
+    setDone(dn);render();
+  }));
+}
+
+/* ---------- settings sheet ---------- */
+const sheet=document.getElementById("sheet");
+const raceInput=document.getElementById("raceInput");
+const dateInfo=document.getElementById("dateInfo");
+
+function updateInfo(){
+  const v=raceInput.value;
+  if(!v){dateInfo.textContent="";return;}
+  const race=parseDate(v),start=startFromRace(race);
+  dateInfo.innerHTML=`18-week plan runs <b>${fmtDate(start)}</b> → <b>${fmtDate(race)}</b> (race day).`;
+}
+function openSheet(first){
+  const race=getRace();
+  raceInput.value=race?toISO(race):"";
+  document.getElementById("sheetTitle").textContent=first?"Welcome — set your race date":"Race date";
+  document.getElementById("closeBtn").style.display=first?"none":"block";
+  updateInfo();
+  sheet.classList.remove("hidden");
+}
+raceInput.addEventListener("input",updateInfo);
+document.getElementById("settingsBtn").addEventListener("click",()=>openSheet(false));
+document.getElementById("closeBtn").addEventListener("click",()=>{sheet.classList.add("hidden");});
+document.getElementById("saveBtn").addEventListener("click",()=>{
+  if(!raceInput.value){raceInput.focus();return;}
+  localStorage.setItem(LS_RACE,raceInput.value);
+  sheet.classList.add("hidden");render();
+});
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  if(confirm("Erase all completed-workout checkmarks? (Keeps your race date.)")){
+    localStorage.removeItem(LS_DONE);render();
+  }
+});
+
+render();
+// re-render when app returns to foreground (new day)
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)render();});
+</script>
+</body>
+</html>
