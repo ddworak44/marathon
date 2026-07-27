@@ -146,6 +146,30 @@
   .sheet .danger{color:#f87171}
   .info{background:#0f0f15;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:12.5px;color:var(--dim);line-height:1.5}
 
+  /* strength */
+  .strBtn{margin-top:9px;width:100%;padding:12px;border-radius:13px;font-size:14px;font-weight:600;
+    background:transparent;border:1px solid var(--line);color:var(--dim);display:flex;align-items:center;justify-content:center;gap:8px}
+  .strBtn:active{background:var(--card)}
+  .strBtn.done{border-color:var(--accent);color:var(--accent)}
+  .day .strbtn{font-size:13px;color:var(--dim2);flex:none;display:flex;align-items:center;gap:3px;padding:3px 5px;border-radius:8px}
+  .day .strbtn.on{color:var(--accent)}
+  .day .strbtn b{font-size:11px;font-weight:800}
+  .exhead{display:grid;grid-template-columns:1fr 64px 64px;gap:8px;font-size:10px;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--dim2);padding:2px 0 4px}
+  .exhead span{text-align:center}.exhead span:first-child{text-align:left}
+  .exrow{display:grid;grid-template-columns:1fr 64px 64px;gap:8px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+  .exleft{display:flex;align-items:center;gap:10px;min-width:0}
+  .exleft>div{min-width:0}
+  .excheck{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);color:transparent;font-size:12px;
+    flex:none;display:grid;place-items:center;transition:.12s}
+  .excheck.on{background:var(--accent);border-color:var(--accent);color:#06210f}
+  .exn{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .exp{font-size:11px;color:var(--dim2)}
+  .stepper{display:flex;align-items:center;justify-content:space-between;background:#0f0f15;border:1px solid var(--line);border-radius:10px;padding:2px}
+  .stepper button{width:22px;height:26px;border-radius:7px;font-size:18px;font-weight:700;color:var(--dim)}
+  .stepper button:active{background:var(--card2)}
+  .stepper span{font-size:15px;font-weight:700;min-width:20px;text-align:center}
+
   .footnote{text-align:center;color:var(--dim2);font-size:11.5px;margin-top:28px;line-height:1.5}
 </style>
 </head>
@@ -182,6 +206,17 @@
     <button class="primary" id="logSave">Save</button>
     <button class="ghost danger" id="logClear">Clear this entry</button>
     <button class="ghost" id="logCancel">Cancel</button>
+  </div>
+</div>
+
+<!-- Strength sheet -->
+<div class="sheet hidden" id="strSheet">
+  <div class="box">
+    <h3 id="strTitle">Strength</h3>
+    <p id="strDesc"></p>
+    <div id="strRows"></div>
+    <button class="primary" id="strSave">Save</button>
+    <button class="ghost" id="strCancel">Cancel</button>
   </div>
 </div>
 
@@ -230,6 +265,69 @@ const SEED = {
   "3-1":{done:true,dist:4.61,timeSec:null,note:"pace unknown"},   // Tue Jul 21
   "3-2":{done:true,dist:3.89,timeSec:2104,note:""},               // Wed Jul 22  ~9:01/mi
   "3-3":{done:true,dist:4.45,timeSec:2425,note:""},               // Thu Jul 23  ~9:05/mi
+};
+
+/* suggested strength pairing per weekday (0=Mon..6=Sun) — legs bend to the run.
+   reps default to multiples of 5 (stepper: sets ±1, reps ±5). Adjust to what you actually did. */
+const STRENGTH = {
+  0:[ // Mon · easy run — full body, light
+    {n:"Pull-ups",p:"Vertical pull",sets:3,reps:5},
+    {n:"Push-ups",p:"Horizontal push",sets:3,reps:15},
+    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
+    {n:"Squats",p:"Squat",sets:3,reps:15},
+    {n:"Hanging leg raises",p:"Core",sets:3,reps:10},
+    {n:"Calf raises",p:"Calves",sets:3,reps:20},
+  ],
+  1:[ // Tue · intervals/hills — full body incl. legs (already warm)
+    {n:"Pull-ups",p:"Vertical pull",sets:4,reps:5},
+    {n:"Dips",p:"Vertical push",sets:3,reps:10},
+    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
+    {n:"Split squats",p:"Squat · per leg",sets:3,reps:10},
+    {n:"Single-leg deadlifts",p:"Hinge · per leg",sets:3,reps:10},
+    {n:"Hanging leg raises",p:"Core",sets:3,reps:10},
+    {n:"Calf raises",p:"Calves",sets:3,reps:20},
+  ],
+  2:[ // Wed · easy run — upper + core
+    {n:"Pull-ups",p:"Vertical pull",sets:3,reps:5},
+    {n:"Push-ups",p:"Horizontal push",sets:3,reps:15},
+    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
+    {n:"Pike push-ups",p:"Vertical push",sets:3,reps:10},
+    {n:"Hanging leg raises",p:"Core",sets:3,reps:10},
+    {n:"Calf raises",p:"Calves",sets:3,reps:20},
+  ],
+  3:[ // Thu · tempo/pace — upper + core (spare the legs)
+    {n:"Chin-ups",p:"Vertical pull",sets:3,reps:5},
+    {n:"Dips",p:"Vertical push",sets:3,reps:10},
+    {n:"Push-ups",p:"Horizontal push",sets:3,reps:15},
+    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
+    {n:"Hanging leg raises",p:"Core",sets:3,reps:10},
+    {n:"Calf raises",p:"Calves",sets:3,reps:20},
+  ],
+  4:[ // Fri · rest from running — full body
+    {n:"Pull-ups",p:"Vertical pull",sets:4,reps:5},
+    {n:"Push-ups",p:"Horizontal push",sets:3,reps:20},
+    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
+    {n:"Squats",p:"Squat",sets:3,reps:20},
+    {n:"Lunges",p:"Squat · per leg",sets:3,reps:10},
+    {n:"Hanging leg raises",p:"Core",sets:3,reps:15},
+  ],
+  5:[ // Sat · pace run (day before long) — upper only, legs off
+    {n:"Pull-ups",p:"Vertical pull",sets:3,reps:5},
+    {n:"Push-ups",p:"Horizontal push",sets:3,reps:15},
+    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
+    {n:"Pike push-ups",p:"Vertical push",sets:3,reps:10},
+    {n:"Hanging leg raises",p:"Core",sets:3,reps:10},
+  ],
+  6:[], // Sun · long run — rest (the long run is the work)
+};
+const STRNOTE = {
+  0:"Easy run day — light full body.",
+  1:"Legs are already lit from intervals, so stack the lower-body work here.",
+  2:"Upper body + core — keep the legs fresh for tomorrow's tempo.",
+  3:"Tempo day — upper + core only, spare the legs.",
+  4:"Rest from running — a good day for a fuller session.",
+  5:"Day before the long run — upper body only, no legs.",
+  6:"Long-run day — the run is plenty. No strength.",
 };
 
 function classify(w){
@@ -362,6 +460,12 @@ function render(){
       html+=`<button class="doneBtn ${isDone?'done':''}" data-toggle="${w}-${d}"><span class="chk">✓</span> ${isDone?"Done — nice work":"Mark today complete"}</button>
         <button class="logBtn" data-log="${w}-${d}">${(e.dist||e.timeSec)?"✎ Edit run details":"＋ Log run details"}</button>`;
     }
+    if((STRENGTH[d]||[]).length){
+      const sc=strCount(e,d),allDone=sc.total&&sc.done===sc.total;
+      html+=`<button class="strBtn ${allDone?'done':''}" data-str="${w}-${d}">💪 Strength${sc.done?` · ${sc.done}/${sc.total}${allDone?' ✓':''}`:` · ${sc.total} exercises`}</button>`;
+    } else {
+      html+=`<div class="sub" style="margin-top:12px;font-size:12.5px">💪 ${STRNOTE[d]}</div>`;
+    }
     html+=`</div>`;
   }
 
@@ -377,7 +481,7 @@ function render(){
     <div class="bar"><i style="width:${pct}%"></i></div></div>`;
 
   // schedule
-  html+=`<div class="sec"><h2>Full schedule</h2><span class="hint">tap a day to log · circle to toggle</span></div>`;
+  html+=`<div class="sec"><h2>Full schedule</h2><span class="hint">tap a day to log · 💪 for strength</span></div>`;
   const curW=(n>=0&&n<TOTAL_DAYS)?Math.floor(n/7):(n<0?-1:18);
   for(let w=START_WEEK;w<18;w++){
     let wt=0,wd=0,plannedMi=0,loggedMi=0;
@@ -410,9 +514,12 @@ function render(){
         if(e.timeSec&&e.dist)bits.push(fmtPace(e.timeSec,e.dist)+" /mi");
         act=`<span class="act">${bits.join(" · ")}${e.note?` <span class="nn">— ${escapeHtml(e.note)}</span>`:""}</span>`;
       } else if(e.note){ act=`<span class="act"><span class="nn">${escapeHtml(e.note)}</span></span>`; }
+      const sc=strCount(e,d);
+      const strTag=sc.total?`<button class="strbtn ${sc.done===sc.total?'on':''}" data-str="${w}-${d}">💪${sc.done?`<b>${sc.done}/${sc.total}</b>`:""}</button>`:"";
       html+=`<div class="day ${isToday?'today':''}" data-log="${w}-${d}">
         <span class="dname">${DNAMES[d]}</span>
         <span class="dw"><span class="dt" style="background:${c.c}"></span>${label}${act}</span>
+        ${strTag}
         <span class="check ${isRest?'rest':''} ${isDone?'on':''}" data-toggle="${w}-${d}">✓</span></div>`;
     }
     html+=`</div></div>`;
@@ -433,6 +540,14 @@ function actualBlock(e){
 }
 function escapeHtml(s){return (""+s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));}
 
+/* strength: merge a day's saved entries onto the suggested defaults */
+function strList(entry,day){
+  const saved=(entry&&entry.str)||{};
+  return (STRENGTH[day]||[]).map(x=>{const s=saved[x.n]||{};
+    return {n:x.n,p:x.p,sets:s.sets??x.sets,reps:s.reps??x.reps,done:!!s.done};});
+}
+function strCount(entry,day){const l=strList(entry,day);return {done:l.filter(a=>a.done).length,total:l.length};}
+
 function wire(){
   app.querySelectorAll("[data-toggleweek]").forEach(el=>el.addEventListener("click",e=>{
     const wk=el.getAttribute("data-toggleweek");
@@ -447,8 +562,12 @@ function wire(){
     if(!en.done&&!en.dist&&!en.timeSec&&!en.note)delete log[k];else log[k]=en;
     setLog(log);render();
   }));
+  app.querySelectorAll("[data-str]").forEach(el=>el.addEventListener("click",e=>{
+    e.stopPropagation();
+    const[w,d]=el.getAttribute("data-str").split("-");openStr(+w,+d);
+  }));
   app.querySelectorAll("[data-log]").forEach(el=>el.addEventListener("click",e=>{
-    if(e.target.closest("[data-toggle]"))return;
+    if(e.target.closest("[data-toggle]")||e.target.closest("[data-str]"))return;
     const[w,d]=el.getAttribute("data-log").split("-");openLog(+w,+d);
   }));
 }
@@ -497,6 +616,47 @@ document.getElementById("logClear").addEventListener("click",()=>{
   const log=getLog();delete log[editKey];setLog(log);logSheet.classList.add("hidden");render();
 });
 document.getElementById("logCancel").addEventListener("click",()=>logSheet.classList.add("hidden"));
+
+/* ---------- strength editor ---------- */
+const strSheet=document.getElementById("strSheet"),strRows=document.getElementById("strRows");
+let strW=null,strD=null;
+
+function stepper(field,val){
+  const st=field==="sets"?1:5;
+  return `<div class="stepper" data-f="${field}"><button type="button" data-s="${-st}">−</button><span>${val}</span><button type="button" data-s="${st}">＋</button></div>`;
+}
+function openStr(w,d){
+  if(!(STRENGTH[d]||[]).length)return;
+  strW=w;strD=d;
+  const list=strList(getLog()[key(w,d)],d);
+  document.getElementById("strTitle").textContent=`Strength · Week ${w+1} · ${DNAMES[d]}`;
+  document.getElementById("strDesc").textContent=STRNOTE[d]||"";
+  strRows.innerHTML=`<div class="exhead"><span>Exercise</span><span>Sets</span><span>Reps</span></div>`+
+    list.map(a=>`<div class="exrow" data-ex="${a.n}">
+      <div class="exleft"><button type="button" class="excheck ${a.done?'on':''}">✓</button>
+        <div><div class="exn">${a.n}</div><div class="exp">${a.p}</div></div></div>
+      ${stepper("sets",a.sets)}${stepper("reps",a.reps)}</div>`).join("");
+  strRows.querySelectorAll(".excheck").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("on")));
+  strRows.querySelectorAll(".stepper button").forEach(b=>b.addEventListener("click",()=>{
+    const span=b.parentElement.querySelector("span");
+    let v=(+span.textContent)+(+b.getAttribute("data-s"));if(v<0)v=0;span.textContent=v;
+  }));
+  strSheet.classList.remove("hidden");
+}
+document.getElementById("strSave").addEventListener("click",()=>{
+  const log=getLog(),k=key(strW,strD),e=log[k]||{},str={};
+  strRows.querySelectorAll(".exrow").forEach(row=>{
+    const n=row.getAttribute("data-ex"),def=(STRENGTH[strD]||[]).find(x=>x.n===n)||{};
+    const done=row.querySelector(".excheck").classList.contains("on");
+    const sets=+row.querySelector('.stepper[data-f="sets"] span').textContent;
+    const reps=+row.querySelector('.stepper[data-f="reps"] span').textContent;
+    if(done||sets!==def.sets||reps!==def.reps)str[n]={sets,reps,done};
+  });
+  if(Object.keys(str).length)e.str=str;else delete e.str;
+  if(!e.done&&!e.dist&&!e.timeSec&&!e.note&&!e.str)delete log[k];else log[k]=e;
+  setLog(log);strSheet.classList.add("hidden");render();
+});
+document.getElementById("strCancel").addEventListener("click",()=>strSheet.classList.add("hidden"));
 
 /* ---------- settings ---------- */
 const sheet=document.getElementById("sheet"),raceInput=document.getElementById("raceInput"),dateInfo=document.getElementById("dateInfo");
