@@ -272,17 +272,24 @@ const SEED = {
 const STRENGTH = {
   0:[ // Mon · easy run — full body, light
     {n:"Pull-ups",p:"Vertical pull",sets:3,reps:5},
+    {n:"Chin-ups",p:"Vertical pull",sets:3,reps:5},
     {n:"Push-ups",p:"Horizontal push",sets:3,reps:15},
+    {n:"Diamond push-ups",p:"Horizontal push",sets:3,reps:10},
     {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
     {n:"Squats",p:"Squat",sets:3,reps:15},
+    {n:"Glute bridges",p:"Hinge",sets:3,reps:15},
     {n:"Hanging leg raises",p:"Core",sets:3,reps:10},
+    {n:"Plank",p:"Core · hold (sec)",sets:3,reps:30},
     {n:"Calf raises",p:"Calves",sets:3,reps:20},
   ],
   1:[ // Tue · intervals/hills — full body incl. legs (already warm)
     {n:"Pull-ups",p:"Vertical pull",sets:4,reps:5},
+    {n:"Chin-ups",p:"Vertical pull",sets:3,reps:5},
     {n:"Dips",p:"Vertical push",sets:3,reps:10},
     {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
     {n:"Split squats",p:"Squat · per leg",sets:3,reps:10},
+    {n:"Lunges",p:"Squat · per leg",sets:3,reps:10},
+    {n:"Step-ups",p:"Squat · per leg",sets:3,reps:10},
     {n:"Single-leg deadlifts",p:"Hinge · per leg",sets:3,reps:10},
     {n:"Hanging leg raises",p:"Core",sets:3,reps:10},
     {n:"Calf raises",p:"Calves",sets:3,reps:20},
@@ -290,32 +297,44 @@ const STRENGTH = {
   2:[ // Wed · easy run — upper + core
     {n:"Pull-ups",p:"Vertical pull",sets:3,reps:5},
     {n:"Push-ups",p:"Horizontal push",sets:3,reps:15},
-    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
+    {n:"Wide push-ups",p:"Horizontal push",sets:3,reps:12},
     {n:"Pike push-ups",p:"Vertical push",sets:3,reps:10},
+    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:12},
+    {n:"Bench dips",p:"Vertical push",sets:3,reps:12},
     {n:"Hanging leg raises",p:"Core",sets:3,reps:10},
+    {n:"Russian twists",p:"Core",sets:3,reps:20},
     {n:"Calf raises",p:"Calves",sets:3,reps:20},
   ],
   3:[ // Thu · tempo/pace — upper + core (spare the legs)
     {n:"Chin-ups",p:"Vertical pull",sets:3,reps:5},
     {n:"Dips",p:"Vertical push",sets:3,reps:10},
     {n:"Push-ups",p:"Horizontal push",sets:3,reps:15},
+    {n:"Diamond push-ups",p:"Horizontal push",sets:3,reps:10},
     {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
-    {n:"Hanging leg raises",p:"Core",sets:3,reps:10},
+    {n:"Pike push-ups",p:"Vertical push",sets:3,reps:10},
+    {n:"Hanging knee raises",p:"Core",sets:3,reps:12},
+    {n:"Plank",p:"Core · hold (sec)",sets:3,reps:30},
     {n:"Calf raises",p:"Calves",sets:3,reps:20},
   ],
   4:[ // Fri · rest from running — full body
     {n:"Pull-ups",p:"Vertical pull",sets:4,reps:5},
     {n:"Push-ups",p:"Horizontal push",sets:3,reps:20},
-    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
+    {n:"Dips",p:"Vertical push",sets:3,reps:10},
+    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:12},
     {n:"Squats",p:"Squat",sets:3,reps:20},
     {n:"Lunges",p:"Squat · per leg",sets:3,reps:10},
+    {n:"Single-leg deadlifts",p:"Hinge · per leg",sets:3,reps:10},
+    {n:"Glute bridges",p:"Hinge",sets:3,reps:15},
     {n:"Hanging leg raises",p:"Core",sets:3,reps:15},
+    {n:"Calf raises",p:"Calves",sets:3,reps:20},
   ],
   5:[ // Sat · pace run (day before long) — upper only, legs off
     {n:"Pull-ups",p:"Vertical pull",sets:3,reps:5},
+    {n:"Chin-ups",p:"Vertical pull",sets:3,reps:5},
     {n:"Push-ups",p:"Horizontal push",sets:3,reps:15},
-    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
     {n:"Pike push-ups",p:"Vertical push",sets:3,reps:10},
+    {n:"Inverted rows",p:"Horizontal pull",sets:3,reps:10},
+    {n:"Bench dips",p:"Vertical push",sets:3,reps:12},
     {n:"Hanging leg raises",p:"Core",sets:3,reps:10},
   ],
   6:[], // Sun · long run — rest (the long run is the work)
@@ -461,8 +480,8 @@ function render(){
         <button class="logBtn" data-log="${w}-${d}">${(e.dist||e.timeSec)?"✎ Edit run details":"＋ Log run details"}</button>`;
     }
     if((STRENGTH[d]||[]).length){
-      const sc=strCount(e,d),allDone=sc.total&&sc.done===sc.total;
-      html+=`<button class="strBtn ${allDone?'done':''}" data-str="${w}-${d}">💪 Strength${sc.done?` · ${sc.done}/${sc.total}${allDone?' ✓':''}`:` · ${sc.total} exercises`}</button>`;
+      const sc=strCount(e,d);
+      html+=`<button class="strBtn ${sc.done?'done':''}" data-str="${w}-${d}">💪 Strength${sc.done?` · ${sc.done} logged`:` · ${sc.total} exercises`}</button>`;
     } else {
       html+=`<div class="sub" style="margin-top:12px;font-size:12.5px">💪 ${STRNOTE[d]}</div>`;
     }
@@ -515,7 +534,7 @@ function render(){
         act=`<span class="act">${bits.join(" · ")}${e.note?` <span class="nn">— ${escapeHtml(e.note)}</span>`:""}</span>`;
       } else if(e.note){ act=`<span class="act"><span class="nn">${escapeHtml(e.note)}</span></span>`; }
       const sc=strCount(e,d);
-      const strTag=sc.total?`<button class="strbtn ${sc.done===sc.total?'on':''}" data-str="${w}-${d}">💪${sc.done?`<b>${sc.done}/${sc.total}</b>`:""}</button>`:"";
+      const strTag=sc.total?`<button class="strbtn ${sc.done?'on':''}" data-str="${w}-${d}">💪${sc.done?`<b>${sc.done}</b>`:""}</button>`:"";
       html+=`<div class="day ${isToday?'today':''}" data-log="${w}-${d}">
         <span class="dname">${DNAMES[d]}</span>
         <span class="dw"><span class="dt" style="background:${c.c}"></span>${label}${act}</span>
@@ -540,11 +559,12 @@ function actualBlock(e){
 }
 function escapeHtml(s){return (""+s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));}
 
-/* strength: merge a day's saved entries onto the suggested defaults */
+/* strength: values start at 0 and carry the suggestion for reference; done = logged both sets & reps */
 function strList(entry,day){
   const saved=(entry&&entry.str)||{};
   return (STRENGTH[day]||[]).map(x=>{const s=saved[x.n]||{};
-    return {n:x.n,p:x.p,sets:s.sets??x.sets,reps:s.reps??x.reps,done:!!s.done};});
+    const sets=s.sets??0,reps=s.reps??0;
+    return {n:x.n,p:x.p,sug:{sets:x.sets,reps:x.reps},sets,reps,done:sets>0&&reps>0};});
 }
 function strCount(entry,day){const l=strList(entry,day);return {done:l.filter(a=>a.done).length,total:l.length};}
 
@@ -630,27 +650,29 @@ function openStr(w,d){
   strW=w;strD=d;
   const list=strList(getLog()[key(w,d)],d);
   document.getElementById("strTitle").textContent=`Strength · Week ${w+1} · ${DNAMES[d]}`;
-  document.getElementById("strDesc").textContent=STRNOTE[d]||"";
+  document.getElementById("strDesc").textContent=(STRNOTE[d]||"")+" Log what you actually did — anything above 0 counts as done.";
   strRows.innerHTML=`<div class="exhead"><span>Exercise</span><span>Sets</span><span>Reps</span></div>`+
     list.map(a=>`<div class="exrow" data-ex="${a.n}">
-      <div class="exleft"><button type="button" class="excheck ${a.done?'on':''}">✓</button>
-        <div><div class="exn">${a.n}</div><div class="exp">${a.p}</div></div></div>
+      <div class="exleft"><span class="excheck ${a.done?'on':''}">✓</span>
+        <div><div class="exn">${a.n}</div><div class="exp">${a.p} · suggested ${a.sug.sets}×${a.sug.reps}</div></div></div>
       ${stepper("sets",a.sets)}${stepper("reps",a.reps)}</div>`).join("");
-  strRows.querySelectorAll(".excheck").forEach(b=>b.addEventListener("click",()=>b.classList.toggle("on")));
   strRows.querySelectorAll(".stepper button").forEach(b=>b.addEventListener("click",()=>{
     const span=b.parentElement.querySelector("span");
     let v=(+span.textContent)+(+b.getAttribute("data-s"));if(v<0)v=0;span.textContent=v;
+    const row=b.closest(".exrow");
+    const sets=+row.querySelector('.stepper[data-f="sets"] span').textContent;
+    const reps=+row.querySelector('.stepper[data-f="reps"] span').textContent;
+    row.querySelector(".excheck").classList.toggle("on",sets>0&&reps>0);
   }));
   strSheet.classList.remove("hidden");
 }
 document.getElementById("strSave").addEventListener("click",()=>{
   const log=getLog(),k=key(strW,strD),e=log[k]||{},str={};
   strRows.querySelectorAll(".exrow").forEach(row=>{
-    const n=row.getAttribute("data-ex"),def=(STRENGTH[strD]||[]).find(x=>x.n===n)||{};
-    const done=row.querySelector(".excheck").classList.contains("on");
+    const n=row.getAttribute("data-ex");
     const sets=+row.querySelector('.stepper[data-f="sets"] span').textContent;
     const reps=+row.querySelector('.stepper[data-f="reps"] span').textContent;
-    if(done||sets!==def.sets||reps!==def.reps)str[n]={sets,reps,done};
+    if(sets>0||reps>0)str[n]={sets,reps,done:sets>0&&reps>0};
   });
   if(Object.keys(str).length)e.str=str;else delete e.str;
   if(!e.done&&!e.dist&&!e.timeSec&&!e.note&&!e.str)delete log[k];else log[k]=e;
