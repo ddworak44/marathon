@@ -1,46 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="270" viewBox="0 0 1000 270" role="img" aria-labelledby="title desc">
-  <title id="title">Marathon spectator route from McCarren Park to First Avenue</title>
-  <desc id="desc">Walk from McCarren Park to Bedford Avenue L, take the L to 14 Street Sixth Avenue, transfer to the F to Roosevelt Island, walk to the tram, ride to Manhattan, then walk to the First Avenue and 72nd Street crossing.</desc>
-  <rect width="1000" height="270" rx="20" fill="#f8fafc"/>
-  <text x="30" y="42" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#152238">McCarren Park → Roosevelt Island → Manhattan</text>
-  <text x="30" y="68" font-family="Arial,sans-serif" font-size="14" fill="#536174">Sunday route: walk, L train, F train, tram, walk</text>
-
-  <line x1="92" y1="135" x2="938" y2="135" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
-  <line x1="92" y1="135" x2="257" y2="135" stroke="#697586" stroke-width="6" stroke-dasharray="8 7"/>
-  <line x1="257" y1="135" x2="464" y2="135" stroke="#a7a9ac" stroke-width="10"/>
-  <line x1="464" y1="135" x2="676" y2="135" stroke="#ff6319" stroke-width="10"/>
-  <line x1="676" y1="135" x2="786" y2="135" stroke="#697586" stroke-width="6" stroke-dasharray="8 7"/>
-  <line x1="786" y1="135" x2="875" y2="135" stroke="#1682bc" stroke-width="10"/>
-  <line x1="875" y1="135" x2="938" y2="135" stroke="#697586" stroke-width="6" stroke-dasharray="8 7"/>
-
-  <circle cx="92" cy="135" r="12" fill="#fff" stroke="#334155" stroke-width="4"/>
-  <circle cx="257" cy="135" r="17" fill="#a7a9ac"/>
-  <circle cx="464" cy="135" r="17" fill="#ff6319"/>
-  <circle cx="676" cy="135" r="17" fill="#ff6319"/>
-  <circle cx="786" cy="135" r="12" fill="#fff" stroke="#334155" stroke-width="4"/>
-  <circle cx="875" cy="135" r="12" fill="#fff" stroke="#1682bc" stroke-width="4"/>
-  <circle cx="938" cy="135" r="12" fill="#fff" stroke="#334155" stroke-width="4"/>
-  <text x="257" y="141" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#fff">L</text>
-  <text x="464" y="141" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#fff">F</text>
-  <text x="676" y="141" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#fff">F</text>
-
-  <g font-family="Arial,sans-serif" font-size="14" fill="#152238" text-anchor="middle">
-    <text x="92" y="181">Bedford &amp; N 12th</text>
-    <text x="257" y="181">Bedford Av</text>
-    <text x="464" y="181">14 St–6 Av</text>
-    <text x="676" y="181">Roosevelt Island</text>
-    <text x="786" y="181">Island tram</text>
-    <text x="875" y="181">Manhattan</text>
-    <text x="938" y="200">1st &amp;</text>
-    <text x="938" y="218">72nd</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="290" viewBox="0 0 1200 290" role="img" aria-labelledby="title desc">
+  <title id="title">Marathon spectator route through Brooklyn and Queens to Roosevelt Island</title>
+  <desc id="desc">Take the L from First Avenue to Bedford Avenue, cheer at McCarren Park, walk to Nassau Avenue G, take the G to Court Square and the 7 to Queensboro Plaza, walk to a taxi pickup, drive over the Roosevelt Island Bridge, then ride the tram into Manhattan.</desc>
+  <rect width="1200" height="290" rx="20" fill="#f8fafc"/>
+  <text x="30" y="40" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#152238">Manhattan → McCarren Park → Queens → Roosevelt Island → Manhattan</text>
+  <text x="30" y="68" font-family="Arial,sans-serif" font-size="14" fill="#536174">Race-day route: L subway · sidewalk · G subway · 7 subway · cab via Roosevelt Island Bridge · tram</text>
+  <line x1="65" y1="140" x2="1130" y2="140" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
+  <line x1="65" y1="140" x2="205" y2="140" stroke="#a7a9ac" stroke-width="10"/>
+  <line x1="205" y1="140" x2="355" y2="140" stroke="#697586" stroke-width="6" stroke-dasharray="8 7"/>
+  <line x1="355" y1="140" x2="500" y2="140" stroke="#6cbe45" stroke-width="10"/>
+  <line x1="500" y1="140" x2="640" y2="140" stroke="#b933ad" stroke-width="10"/>
+  <line x1="640" y1="140" x2="740" y2="140" stroke="#697586" stroke-width="6" stroke-dasharray="8 7"/>
+  <line x1="740" y1="140" x2="930" y2="140" stroke="#f59e0b" stroke-width="10"/>
+  <line x1="930" y1="140" x2="1090" y2="140" stroke="#1682bc" stroke-width="10"/>
+  <line x1="1090" y1="140" x2="1130" y2="140" stroke="#697586" stroke-width="6" stroke-dasharray="8 7"/>
+  <g font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">
+    <circle cx="65" cy="140" r="16" fill="#a7a9ac"/><text x="65" y="146">L</text>
+    <circle cx="205" cy="140" r="16" fill="#a7a9ac"/><text x="205" y="146">L</text>
+    <circle cx="355" cy="140" r="16" fill="#6cbe45"/><text x="355" y="146">G</text>
+    <circle cx="500" cy="140" r="16" fill="#6cbe45"/><text x="500" y="146">G</text>
+    <circle cx="640" cy="140" r="16" fill="#b933ad"/><text x="640" y="146">7</text>
+  </g>
+  <circle cx="275" cy="140" r="11" fill="#fff" stroke="#334155" stroke-width="4"/>
+  <circle cx="740" cy="140" r="11" fill="#fff" stroke="#334155" stroke-width="4"/>
+  <circle cx="930" cy="140" r="11" fill="#fff" stroke="#334155" stroke-width="4"/>
+  <circle cx="1090" cy="140" r="11" fill="#fff" stroke="#1682bc" stroke-width="4"/>
+  <circle cx="1130" cy="140" r="11" fill="#fff" stroke="#334155" stroke-width="4"/>
+  <g font-family="Arial,sans-serif" font-size="13" fill="#152238" text-anchor="middle">
+    <text x="65" y="180">1 Av</text>
+    <text x="205" y="180">Bedford Av</text>
+    <text x="275" y="202">Bedford / N 12th</text>
+    <text x="355" y="180">Nassau Av</text>
+    <text x="500" y="180">Court Sq</text>
+    <text x="640" y="180">Queensboro Plaza</text>
+    <text x="740" y="202">27th / 41st</text>
+    <text x="930" y="180">Island tram</text>
+    <text x="1090" y="180">Manhattan tram</text>
+    <text x="1130" y="214">1st / 72nd</text>
   </g>
   <g font-family="Arial,sans-serif" font-size="12" fill="#536174" text-anchor="middle">
-    <text x="174" y="113">walk ~8 min</text>
-    <text x="361" y="113">L toward 8 Av</text>
-    <text x="570" y="113">F toward Queens</text>
-    <text x="730" y="113">walk ~3 min</text>
-    <text x="834" y="113">tram</text>
-    <text x="933" y="113">walk</text>
+    <text x="135" y="115">L · 1 stop</text>
+    <text x="280" y="115">walk / cheer</text>
+    <text x="425" y="115">G to Queens</text>
+    <text x="570" y="115">7 · 1 stop</text>
+    <text x="690" y="115">walk</text>
+    <text x="835" y="115">cab via island bridge</text>
+    <text x="1010" y="115">tram</text>
   </g>
-  <text x="30" y="248" font-family="Arial,sans-serif" font-size="12" fill="#536174">Diagram is for orientation; check MTA and tram service on race day. Tram runs beside the Queensboro Bridge.</text>
+  <text x="30" y="260" font-family="Arial,sans-serif" font-size="12" fill="#536174">Follow race-day closures and staff. Tram runs beside the Queensboro Bridge; a view of any one runner is uncertain.</text>
 </svg>
