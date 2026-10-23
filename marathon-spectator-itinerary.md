@@ -6,6 +6,19 @@
 
 ![Route diagram: L to Bedford, walk to Nassau G, G and 7 through Queens, cab over Roosevelt Island Bridge, tram into Manhattan](spectator-maps/transit-route.svg)
 
+## Which route is best after cheering?
+
+**If the priority is simply to ride the tram, use the L → F subway route to Roosevelt Island, then take the tram into Manhattan.** It has two subway trains and a short island walk, with no cab pickup or marathon road crossing. The Queens route below is the choice if **entering the island over the Roosevelt Island Bridge from Queens** is part of the outing. Either route can run late because of train waits and the tram line; the Queens route adds uncertain taxi availability and road traffic. NYRR [recommends the subway for spectators](https://prod.nyrr.org/tcsnycmarathon/watch-the-race). On **Sunday**, the [F normally serves Roosevelt Island](https://www.rioc.ny.gov/community/transportation/subway); check [MTA alerts](https://www.mta.info/alerts) for that weekend.
+
+| After the McCarren sighting | How they reach Roosevelt Island | Best reason to choose it |
+| --- | --- | --- |
+| **L → F → tram (recommended)** | Walk about **8 minutes** back to Bedford Av L via North 12th, Driggs, and North 7th; ride a **Manhattan-bound L to 6 Av**; transfer inside the station to a **Queens-bound F** and exit at **Roosevelt Island**; walk about **3 minutes** to the island tram. [Walk to Bedford L](https://www.google.com/maps/dir/?api=1&origin=Bedford+Ave+%26+N+12th+St,+Brooklyn,+NY&destination=Bedford+Ave+L+Station,+Bedford+Ave+%26+N+7th+St,+Brooklyn,+NY&waypoints=Driggs+Ave+%26+N+9th+St,+Brooklyn,+NY&travelmode=walking) · [L to F transit](https://www.google.com/maps/dir/?api=1&origin=Bedford+Av+L+Station,+Brooklyn,+NY&destination=Roosevelt+Island+F+Station,+Roosevelt+Island,+NY&travelmode=transit) | Most predictable way to reach the tram; it goes through Manhattan underground on the way to the island. |
+| **G → 7 → cab → tram (Queens route below)** | Walk to Nassau Av G, transfer to the 7 at Court Sq, take a cab from north of Queensboro Plaza across the **Roosevelt Island Bridge**. | Keeps the trip through Queens and uses the bridge, but depends on a cab and open approach roads. |
+
+For the L → F option, these maps show the two walking legs: [McCarren Park → Bedford Av L](spectator-maps/04-mccarren-to-bedford-l.png) and [Roosevelt Island F → island tram](spectator-maps/03-roosevelt-island-to-tram.png).
+
+The runner has only roughly **30–40 minutes** between the McCarren sighting and the Queensboro Bridge. Allowing for the walk, train waits, island transfer, and a [tram that normally runs every 15 minutes outside weekday rush hours](https://www.rioc.ny.gov/community/transportation/tram), **neither route is a sound plan for seeing this same runner from the tram**. If a second sighting at First Avenue matters more than riding the tram, head directly from Bedford Av by subway toward the Upper East Side and skip the island detour.
+
 ## The route
 
 | Target time | Mode | What to do |
