@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f6">
+  <meta name="description" content="{{ page.description | escape }}">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ page.title | escape }}">
+  <meta property="og:description" content="{{ page.description | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <title>{{ page.title | escape }}</title>
+  <style>
+    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.58; color: #1b2a31; background: #f7f8f6; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    a { color: #145b82; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: #0a405e; }
+    a:focus-visible { outline: 3px solid #e2933c; outline-offset: 3px; border-radius: 2px; }
+    .topbar { border-bottom: 1px solid #dce2df; background: #fff; }
+    .topbar-inner { max-width: 960px; padding: 16px 24px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { color: #1b2a31; font-weight: 750; text-decoration: none; letter-spacing: -.01em; }
+    .actions { display: flex; gap: 18px; align-items: center; font-size: 14px; font-weight: 650; white-space: nowrap; }
+    .page { max-width: 960px; margin: 0 auto; padding: 32px 24px 72px; }
+    .content { background: #fff; border: 1px solid #dce2df; border-radius: 18px; padding: clamp(24px, 5vw, 56px); box-shadow: 0 12px 38px rgba(30, 55, 56, .06); }
+    h1, h2, h3 { line-height: 1.2; letter-spacing: -.025em; color: #132e35; }
+    h1 { font-size: clamp(28px, 4vw, 42px); margin: 0 0 20px; }
+    h2 { font-size: clamp(22px, 2.6vw, 28px); margin: 48px 0 16px; padding-top: 8px; border-top: 1px solid #e3e8e5; }
+    h3 { font-size: 20px; margin: 30px 0 12px; }
+    p { margin: 14px 0; }
+    strong { color: #142f34; }
+    blockquote { margin: 24px 0; padding: 18px 22px; background: #ebf5f3; border-left: 4px solid #168f82; border-radius: 0 10px 10px 0; }
+    blockquote p { margin: 0; }
+    img { display: block; max-width: 100%; height: auto; margin: 22px auto; border: 1px solid #dce2df; border-radius: 12px; }
+    table { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; margin: 20px 0 30px; -webkit-overflow-scrolling: touch; }
+    th, td { padding: 12px 14px; border: 1px solid #dce2df; vertical-align: top; text-align: left; }
+    th { background: #edf2f1; font-weight: 700; }
+    td:first-child, th:first-child { min-width: 140px; }
+    td:last-child { min-width: 330px; }
+    tr:nth-child(even) td { background: #fafcfb; }
+    ul { padding-left: 24px; }
+    li { margin: 8px 0; }
+    .footer { max-width: 960px; margin: 24px auto 0; padding: 0 24px; color: #617077; font-size: 13px; }
+    @media (max-width: 620px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; gap: 5px; }
+      .page { padding: 16px 12px 48px; }
+      .content { border-radius: 12px; }
+      .actions { flex-wrap: wrap; gap: 14px; }
+      th, td { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="{{ '/' | relative_url }}">Marathon</a>
+      <nav class="actions" aria-label="Itinerary links">
+        <a href="https://github.com/ddworak44/marathon/blob/main/marathon-spectator-itinerary.md">View source Markdown</a>
+        <a href="{{ '/marathon-spectator-itinerary.zip' | relative_url }}" download>Download maps and itinerary</a>
+      </nav>
+    </div>
+  </header>
+  <main class="page">
+    <article class="content">{{ content }}</article>
+    <p class="footer">Check MTA, NYRR, and tram updates on race day. The route and times are estimates.</p>
+  </main>
+</body>
+</html>

@@ -1,3 +1,10 @@
+---
+layout: itinerary
+title: NYC Marathon spectator itinerary
+description: Cheer near McCarren Park, compare routes to Roosevelt Island, and ride the tram into Manhattan.
+permalink: /itinerary.html
+---
+
 # NYC Marathon spectator itinerary: Manhattan → McCarren Park → Queens → Roosevelt Island Tram
 
 **Sunday, November 1, 2026.** Runner starts around **10:20 a.m.** and expects **8:30 per mile**. This route cheers near McCarren Park, reaches Roosevelt Island **from Queens**, and rides the tram into Manhattan.

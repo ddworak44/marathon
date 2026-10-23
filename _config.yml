@@ -1,0 +1,5 @@
+url: https://ddworak44.github.io
+baseurl: /marathon
+markdown: kramdown
+kramdown:
+  input: GFM
