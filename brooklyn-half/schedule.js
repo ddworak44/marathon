@@ -67,5 +67,6 @@ const calendar = phases.map(({ id, title, weeks }) => ({
 renderHalfTraining({
   openingDay: Date.UTC(2026, 10, 23),
   phases: calendar,
-  summarizeWeek: days => `Sun · ${days.at(-1)[0]}`
+  summarizeWeek: days => `Sun · ${days.at(-1)[0]}`,
+  completionStorageKey: 'marathon:brooklyn-half:2027:complete'
 });
