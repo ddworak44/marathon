@@ -139,6 +139,10 @@
     .efforts dt { font-weight: 700; }
     .efforts dd { margin: 0; color: var(--muted); }
     .guide p { margin-top: 1rem; color: var(--muted); }
+    .pace-table { width: 100%; margin-top: .9rem; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    .pace-table th, .pace-table td { padding: .45rem .35rem; border-bottom: 1px solid var(--line); text-align: left; }
+    .pace-table thead { color: var(--muted); font-size: .875rem; }
+    .pace-table tbody th { font-weight: 650; }
     @media (max-width: 440px) {
       .workout { grid-template-columns: 3.4rem minmax(0, 1fr) auto; gap: .5rem; }
       .workout time span { display: block; }
@@ -158,7 +162,7 @@
         <div><dt>Stretch goal</dt><dd>1:21:00</dd></div>
         <div><dt>Average for 1:21</dt><dd>6:11 / mi <span class="secondary">· 3:50 / km</span></dd></div>
       </dl>
-      <p class="plan-note">Set your March race pace after the <strong>February 16 5K benchmark</strong> and the final long runs. Run each workout by current effort.</p>
+      <p class="plan-note">Use the <strong>Jan 12 5K</strong> to set training efforts. Use the <strong>Feb 20 10K</strong> and the <strong>Mar 6 long run</strong> to choose your March race pace.</p>
     </header>
 
     <section class="schedule" aria-labelledby="schedule-title">
@@ -173,6 +177,7 @@
         <a href="#race-prep">Race prep</a>
         <a href="#taper">Taper</a>
         <a href="#effort">Effort guide</a>
+        <a href="#race-pace">Race pace</a>
       </nav>
       <div id="weeks"></div>
       <noscript><p>Enable JavaScript to view the daily schedule.</p></noscript>
@@ -183,13 +188,30 @@
       <dl class="efforts">
         <dt>Easy and long</dt><dd>Conversational. Keep recovery runs at the gentlest end of that effort.</dd>
         <dt>Strides</dt><dd>Quick, relaxed 15–20 second accelerations with full easy recovery.</dd>
-        <dt>Threshold</dt><dd>Controlled and comfortably hard, around the effort you could hold for an hour.</dd>
-        <dt>10K effort</dt><dd>Use a recent race effort you can repeat evenly through the last rep.</dd>
-        <dt>Half effort</dt><dd>Use the effort you can sustain for the distance based on your recent runs and 5K. Keep the opening race miles controlled and reassess around mile 10.</dd>
+        <dt>Threshold</dt><dd>Controlled and comfortably hard, around the effort you could hold for an hour. Start slower than your 5K pace and finish feeling like you could do one more rep.</dd>
+        <dt>10K effort</dt><dd>Use a recent 10K pace. If you only have a 5K result, start between that pace and threshold effort and keep the reps even.</dd>
+        <dt>Half effort</dt><dd>Use the pace you can sustain for 13.1 miles. Before the 10K benchmark, use a controlled effort a little below threshold.</dd>
       </dl>
       <p>Workout mileage includes warm-up, recovery jogs and cool-down. Start harder sessions with 10–15 minutes easy and finish with about 10 minutes easy. Practice race fueling on the long runs.</p>
       <p>If your recent weeks are closer to 40 mi, shorten the easy runs or take Friday off to trim 4–6 mi in the bigger weeks. Start Saturday runs at a distance you’ve handled recently and build toward 14–15 mi as recovery allows.</p>
-      <p>Even-pace checkpoints for 1:21 are 19:12 at 5K, 38:24 at 10K and 1:01:47 at mile 10. <a href="https://www.mcmillanrunning.com/half-marathon-pace-chart/">McMillan pace chart</a> · <a href="https://prod.nyrr.org/news/2024/02/15/half-marathon-training-faqs">NYRR training guidance</a></p>
+      <p>If you’re still recovering from the marathon, keep the early runs easy and use your current mileage. Once the harder sessions start, keep an easy day or rest day after each one. <a href="https://prod.nyrr.org/news/2024/02/15/half-marathon-training-faqs">NYRR training guidance</a></p>
+    </section>
+
+    <section class="guide" id="race-pace" aria-labelledby="race-pace-title">
+      <h2 id="race-pace-title">Choose your race pace</h2>
+      <p>Use the February 10K to pick a tentative pace. Try it in the March 6 rehearsal and give yourself more room if the second rep takes a race effort. These estimates use a race-equivalence model for recreational runners. <a href="https://doi.org/10.1186/s13102-016-0052-y">Race-equivalence study</a></p>
+      <table class="pace-table">
+        <thead><tr><th scope="col">10K result</th><th scope="col">Estimated half</th><th scope="col">Avg. pace</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">36:26</th><td>1:21:00</td><td>6:11/mi</td></tr>
+          <tr><th scope="row">40:00</th><td>1:28:55</td><td>6:47/mi</td></tr>
+          <tr><th scope="row">45:00</th><td>1:40:02</td><td>7:38/mi</td></tr>
+          <tr><th scope="row">50:00</th><td>1:51:09</td><td>8:29/mi</td></tr>
+          <tr><th scope="row">55:00</th><td>2:02:16</td><td>9:20/mi</td></tr>
+        </tbody>
+      </table>
+      <p>On race day, keep the early miles controlled and let pace slow on the Brooklyn Bridge climb. Settle back into rhythm on the FDR Drive, hold effort through Times Square, and pick it up in Central Park if you have room. <a href="https://prod.nyrr.org/races-and-events/2027/2027-united-airlines-nyc-half">NYRR course overview</a></p>
+      <p>Even-pace checkpoints for 1:21 are 19:12 at 5K, 38:24 at 10K and 1:01:47 at mile 10. <a href="https://www.mcmillanrunning.com/half-marathon-pace-chart/">McMillan pace chart</a></p>
     </section>
   </main>
 </body>

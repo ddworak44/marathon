@@ -1,6 +1,6 @@
 const rest = [0, 'Rest'];
 const easy = miles => [miles, 'Easy run'];
-const strength = miles => [miles, 'Easy run + optional strength', 'Light single-leg, calf, glute and core work.'];
+const strength = miles => [miles, 'Easy run + optional strength', 'Keep split squats, single-leg deadlifts and calf raises light before Saturday.'];
 const strides = miles => [miles, 'Easy run + strides', 'Finish with 4 × 20 seconds relaxed and quick. Walk or jog until recovered.'];
 const long = (miles, note) => [miles, 'Long run', note];
 const recovery = miles => [miles, 'Recovery run'];
@@ -9,7 +9,7 @@ const recovery = miles => [miles, 'Recovery run'];
 const phases = [
   {
     id: 'base', title: 'Base', weeks: [
-      ['Opening week · Wed–Sun', [easy(7), easy(5), easy(5), long(10), recovery(5)]],
+      ['Opening week · Wed–Sun', [easy(7), easy(5), [5, 'Easy run or rest', 'Take the day off if you’re still carrying marathon fatigue.'], long(10), recovery(5)]],
       ['Easy mileage', [rest, easy(7), easy(7), easy(7), strength(5), long(11), recovery(5)]],
       ['Introduce strides', [rest, strides(8), easy(7), easy(7), strength(5), long(12), recovery(6)]],
       ['Build aerobic volume', [rest, strides(8), easy(8), easy(8), strength(5), long(12), recovery(6)]],
@@ -24,11 +24,11 @@ const phases = [
       ['First threshold session', [rest, easy(8), easy(8),
         [9, 'Threshold', '3 × 6 min at threshold effort with 2 min easy jogs.'],
         strength(5), long(13), recovery(7)]],
-      ['Rolling hills', [rest, [9, 'Hill repeats', '8 × 45 sec uphill at a controlled fast effort. Jog back down and recover fully.'],
-        easy(8), easy(9), strength(6), long(13), recovery(7)]],
+      ['5K benchmark', [rest, [9, '5K benchmark', 'Run a timed 5K on a flat route. Start controlled, then build to a hard, even effort. Use a recent 5K result if you already have one.'],
+        recovery(8), easy(8), strength(6), long(12, 'Keep the full run conversational.'), recovery(7)]],
       ['Longer threshold reps', [rest, strides(9), easy(9),
         [9, 'Threshold', '2 × 12 min at threshold effort with a 3 min easy jog.'],
-        strength(6), long(14, 'Practice your race fueling.'), recovery(7)]],
+        strength(6), long(14, 'Choose rolling terrain and keep effort even on climbs. Practice your race fueling.'), recovery(7)]],
       ['Cutback', [rest, strides(8), easy(7), easy(7), strength(5), long(11), recovery(6)]]
     ]
   },
@@ -39,12 +39,13 @@ const phases = [
       ['Threshold endurance', [rest, strides(9), easy(10),
         [10, 'Threshold', '3 × 9 min at threshold effort with 2 min easy jogs.'],
         strength(6), long(14, 'Practice fueling on rolling terrain.'), recovery(7)]],
-      ['5K benchmark', [rest, [9, '5K benchmark', 'Run a timed 5K on a flat route at an even, hard effort. If you’re still building, run easy or use a recent 5K result.'],
-        recovery(8), easy(10), strength(6), long(15, 'Keep the full run conversational.'), recovery(7)]],
-      ['Cutback', [rest, strides(8), easy(8), easy(8), strength(5), long(11), recovery(6)]],
-      ['Peak week', [rest, [10, 'Threshold', '3 × 1 mi at current threshold effort with 2 min easy jogs.'],
-        easy(10), easy(10), strength(6),
-        long(15, 'If you’re recovering well, finish the last 2–3 mi at planned half-marathon effort. Otherwise keep it easy.'), recovery(7)]]
+      ['10K benchmark · reduced mileage', [rest, strides(8), easy(8), easy(8), easy(5),
+        [11, '10K benchmark', 'Race a 10K or time yourself over a measured 10K. Start controlled and aim for even effort. The 11 mi includes easy warm-up and cool-down.'],
+        recovery(6)]],
+      ['Recover and rebuild', [rest, easy(8), easy(8), strides(9), strength(5),
+        long(13, 'Keep this aerobic while you recover from the 10K.'), recovery(7)]],
+      ['Peak week · race-pace rehearsal', [rest, strides(10), easy(10), easy(10), easy(6),
+        long(15, 'If recovered, run 2 × 2 mi at your tentative half-marathon pace in the second half with 3 min easy between reps. Practice race fueling. If the reps feel like a race, reset your target pace.'), recovery(7)]]
     ]
   },
   {
