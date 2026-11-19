@@ -40,6 +40,11 @@
   .countdown b{color:var(--accent);font-weight:800;font-size:14px}
   .iconbtn{width:38px;height:38px;border-radius:11px;background:var(--card);display:grid;place-items:center;font-size:17px;color:var(--dim)}
   .iconbtn:active{background:var(--card2)}
+  .training-link{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    margin-bottom:16px;padding:12px 15px;border:1px solid var(--line);border-radius:13px;
+    color:var(--txt);background:var(--card);text-decoration:none;font-size:14px;font-weight:700}
+  .training-link time{color:var(--accent);font-weight:600;white-space:nowrap}
+  .training-link:hover{border-color:var(--accent)}
 
   /* today card */
   .today{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);
@@ -182,6 +187,8 @@
   </div>
   <button class="iconbtn" id="settingsBtn" aria-label="Settings">⚙</button>
 </div>
+
+<a class="training-link" href="nyc-half/index.html">NYC Half training schedule <time datetime="2027-03-21">Mar 21, 2027</time></a>
 
 <div id="app"></div>
 
