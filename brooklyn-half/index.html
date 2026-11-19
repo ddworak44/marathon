@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b0f">
+  <meta name="description" content="A 22-week beginner run/walk training plan for the April 25, 2027 NYCRUNS Brooklyn Experience Half Marathon.">
+  <title>Brooklyn Experience Half Training | Marathon</title>
+  <link rel="icon" href="../icon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0b0f;
+      --card: #16161d;
+      --line: #30313b;
+      --text: #f4f4f6;
+      --muted: #b9b9c6;
+      --accent: #ffc287;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 1rem; }
+    body {
+      max-width: 48rem;
+      margin: 0 auto;
+      padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+        max(40px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      background: var(--bg);
+      color: var(--text);
+      font: 1rem/1.55 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    }
+    a { color: var(--accent); text-underline-offset: .2em; }
+    a:hover { color: var(--text); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    h1, h2, h3, p, dl, dd { margin: 0; }
+    h1, h2, h3 { line-height: 1.16; letter-spacing: -.025em; }
+    .site-nav { margin-bottom: .75rem; font-size: .875rem; }
+    .site-nav a { display: inline-block; padding: .5rem 0; }
+    .hero {
+      padding: clamp(1.2rem, 5vw, 2rem);
+      border: 1px solid #5b3e2c;
+      border-radius: 1.4rem;
+      background: radial-gradient(ellipse at top right, #462a1e, transparent 72%), var(--card);
+    }
+    .race-date { color: var(--accent); font-weight: 700; }
+    h1 { max-width: 16ch; margin: .5rem 0 .7rem; font-size: clamp(2rem, 7vw, 3.5rem); }
+    .hero p + p { margin-top: .7rem; }
+    .hero .intro { max-width: 48ch; color: var(--muted); }
+    .jump-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+    .jump-links a {
+      padding: .5rem .75rem;
+      border: 1px solid var(--line);
+      border-radius: .65rem;
+      background: var(--card);
+      color: var(--text);
+      font-size: .875rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .jump-links a:hover { border-color: var(--accent); }
+    section { margin-top: 2rem; }
+    h2 { font-size: 1.5rem; }
+    .section-note, .phase p, .guide p { margin-top: .65rem; color: var(--muted); }
+    .guide {
+      padding: clamp(.95rem, 4vw, 1.35rem);
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: var(--card);
+    }
+    strong, dt { color: var(--text); }
+    dt { font-weight: 700; }
+    dd { margin-top: .15rem; color: var(--muted); }
+    dl { margin-top: .9rem; }
+    dl > div + div { margin-top: .75rem; }
+    .phase { margin-top: 1.4rem; }
+    .phase h3 { color: var(--accent); font-size: 1.12rem; }
+    .table-frame {
+      margin-top: .65rem;
+      border: 1px solid var(--line);
+      border-radius: .8rem;
+      background: var(--card);
+    }
+    table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    th, td { padding: .55rem .7rem; text-align: left; }
+    tr > * + * { text-align: right; }
+    thead th { color: var(--muted); font-size: .875rem; }
+    tbody tr { border-top: 1px solid var(--line); }
+    tbody th { font-weight: 650; }
+    .workouts td { white-space: nowrap; }
+    .workouts .long { font-weight: 700; }
+    .week-note { display: block; color: var(--muted); font-size: .78rem; font-weight: 500; }
+    .key-week .long { color: var(--accent); }
+    .guide h3 { margin-top: 1.1rem; font-size: 1.05rem; }
+    @media (max-width: 400px) {
+      th, td { padding: .5rem .38rem; font-size: .875rem; }
+      .workouts td { white-space: normal; }
+      .week-note { font-size: .75rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Training plans"><a href="../index.html">← Marathon training</a></nav>
+  <main>
+    <header class="hero">
+      <p class="race-date"><time datetime="2027-04-25">Sunday, April 25, 2027</time></p>
+      <h1>NYCRUNS Brooklyn Experience Half Marathon</h1>
+      <p class="intro">A 22-week plan to go from 1–3 mile outings to 13.1 miles in Prospect Park. Train three days a week with an easy run/walk and aim for a finish.</p>
+      <p><a href="https://nycruns.com/race/nycruns-brooklyn-experience-half-marathon">Official race details</a></p>
+    </header>
+
+    <nav class="jump-links" aria-label="On this page">
+      <a href="#start">How to start</a>
+      <a href="#schedule">Weekly schedule</a>
+      <a href="#race-day">Race pace and cutoff</a>
+    </nav>
+
+    <section class="guide" id="start" aria-labelledby="start-title">
+      <h2 id="start-title">Start where you are</h2>
+      <dl>
+        <div>
+          <dt>If a mile is your usual outing</dt>
+          <dd>Use the low end of the ranges. Try 30 seconds of easy jogging and 60–90 seconds of walking. If you currently run once a week, make Thursday a brisk walk for the first two weeks.</dd>
+        </div>
+        <div>
+          <dt>If 2–3 miles already feel comfortable</dt>
+          <dd>Use the upper end if you’ve been running regularly and recovering well. Try 2 minutes of easy jogging and 1 minute of walking, or jog continuously if you can talk in full sentences.</dd>
+        </div>
+      </dl>
+      <p>Start and finish each training outing with a few minutes of walking, included in the listed time or distance. If you’re using intervals, take walk breaks from the start. On a joint run, use a short loop and regroup each lap so both of you can stay at an easy effort.</p>
+      <p><strong>Adjust week by week.</strong> If the long run feels overly hard or you’re still unusually sore by Tuesday, repeat the last comfortable week or shorten the next outing. Skip missed sessions and carry on from a distance you’ve handled. Stop a run if pain changes your stride, and get persistent pain checked.</p>
+      <p><a href="https://www.jeffgalloway.com/training/half-marathon-training/">Run/walk training guidance</a></p>
+    </section>
+
+    <section id="schedule" aria-labelledby="schedule-title">
+      <h2 id="schedule-title">Weekly schedule</h2>
+      <p class="section-note">Nov 23, 2026 to Apr 25, 2027. Tuesday and Thursday are short, easy sessions. Sunday is the long run/walk. Rest or take an easy walk on other days. You can move Sunday to Saturday if that fits better, with at least one day between runs.</p>
+
+      <div class="phase" id="base">
+        <h3 id="base-title">Build the habit</h3>
+        <p>Work toward an easy 3 miles of running and walking. Repeat a base week if 3 miles still feels like a stretch when the Sunday sessions switch to miles.</p>
+        <div class="table-frame">
+          <table class="workouts" aria-labelledby="base-title">
+            <thead><tr><th scope="col">Week of</th><th scope="col">Tue</th><th scope="col">Thu</th><th scope="col">Sun</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><time datetime="2026-11-23">Nov 23</time></th><td>15–20 min</td><td>15–20 min</td><td class="long">20–30 min</td></tr>
+              <tr><th scope="row"><time datetime="2026-11-30">Nov 30</time></th><td>15–20 min</td><td>15–20 min</td><td class="long">25–35 min</td></tr>
+              <tr><th scope="row"><time datetime="2026-12-07">Dec 7</time></th><td>20–25 min</td><td>15–20 min</td><td class="long">30–40 min</td></tr>
+              <tr><th scope="row"><time datetime="2026-12-14">Dec 14</time><span class="week-note">Cutback</span></th><td>15–20 min</td><td>15–20 min</td><td class="long">25–30 min</td></tr>
+              <tr><th scope="row"><time datetime="2026-12-21">Dec 21</time></th><td>20–25 min</td><td>20–25 min</td><td class="long">35–45 min</td></tr>
+              <tr><th scope="row"><time datetime="2026-12-28">Dec 28</time></th><td>20–25 min</td><td>20–25 min</td><td class="long">40–50 min</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="phase" id="endurance">
+        <h3 id="endurance-title">Build to 6 miles</h3>
+        <p>On outings over an hour, practice with water or sports drink and a carb source you tolerate, such as gels or chews. On Feb 28, time 2 flat miles within the long run using your planned walk breaks. Record elapsed pace and how it felt.</p>
+        <div class="table-frame">
+          <table class="workouts" aria-labelledby="endurance-title">
+            <thead><tr><th scope="col">Week of</th><th scope="col">Tue</th><th scope="col">Thu</th><th scope="col">Sun</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><time datetime="2027-01-04">Jan 4</time></th><td>25 min</td><td>20–25 min</td><td class="long">3–3.5 mi</td></tr>
+              <tr><th scope="row"><time datetime="2027-01-11">Jan 11</time></th><td>25–30 min</td><td>25 min</td><td class="long">3.5–4 mi</td></tr>
+              <tr><th scope="row"><time datetime="2027-01-18">Jan 18</time></th><td>25–30 min</td><td>25–30 min</td><td class="long">4–4.5 mi</td></tr>
+              <tr><th scope="row"><time datetime="2027-01-25">Jan 25</time><span class="week-note">Cutback</span></th><td>20–25 min</td><td>20–25 min</td><td class="long">3–3.5 mi</td></tr>
+              <tr><th scope="row"><time datetime="2027-02-01">Feb 1</time></th><td>30 min</td><td>25–30 min</td><td class="long">4.5–5 mi</td></tr>
+              <tr><th scope="row"><time datetime="2027-02-08">Feb 8</time></th><td>30 min</td><td>30 min</td><td class="long">5–5.5 mi</td></tr>
+              <tr><th scope="row"><time datetime="2027-02-15">Feb 15</time></th><td>30–35 min</td><td>30 min</td><td class="long">5.5–6 mi</td></tr>
+              <tr class="key-week"><th scope="row"><time datetime="2027-02-22">Feb 22</time><span class="week-note">Pace check</span></th><td>25–30 min</td><td>25 min</td><td class="long">4.5–5 mi</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="phase" id="rehearse">
+        <h3 id="rehearse-title">Rehearse for race day</h3>
+        <p>On Mar 28, use your race shoes, fuel and run/walk pattern on a gently rolling route. Time the middle 3–4 miles at a steady effort you could keep up. On Apr 11, aim for 9–10 miles if the build has gone well. Cap training runs at 2½ hours, even if you’re short of the distance.</p>
+        <div class="table-frame">
+          <table class="workouts" aria-labelledby="rehearse-title">
+            <thead><tr><th scope="col">Week of</th><th scope="col">Tue</th><th scope="col">Thu</th><th scope="col">Sun</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><time datetime="2027-03-01">Mar 1</time></th><td>35 min</td><td>30 min</td><td class="long">6–6.5 mi</td></tr>
+              <tr><th scope="row"><time datetime="2027-03-08">Mar 8</time></th><td>35 min</td><td>30–35 min</td><td class="long">6.5–7 mi</td></tr>
+              <tr><th scope="row"><time datetime="2027-03-15">Mar 15</time></th><td>35–40 min</td><td>30–35 min</td><td class="long">7.5–8 mi</td></tr>
+              <tr class="key-week"><th scope="row"><time datetime="2027-03-22">Mar 22</time><span class="week-note">Rehearsal</span></th><td>30–35 min</td><td>25–30 min</td><td class="long">6–7 mi</td></tr>
+              <tr><th scope="row"><time datetime="2027-03-29">Mar 29</time></th><td>35–40 min</td><td>30–35 min</td><td class="long">8.5–9 mi</td></tr>
+              <tr class="key-week"><th scope="row"><time datetime="2027-04-05">Apr 5</time><span class="week-note">Longest run</span></th><td>30–35 min</td><td>25–30 min</td><td class="long">9–10 mi</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="phase" id="taper">
+        <h3 id="taper-title">Taper and race</h3>
+        <p>Keep the final two weeks easy. Take Saturday off or go for a short walk before the race.</p>
+        <div class="table-frame">
+          <table class="workouts" aria-labelledby="taper-title">
+            <thead><tr><th scope="col">Week of</th><th scope="col">Tue</th><th scope="col">Thu</th><th scope="col">Sun</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><time datetime="2027-04-12">Apr 12</time></th><td>25 min</td><td>20–25 min</td><td class="long">5–6 mi</td></tr>
+              <tr class="key-week"><th scope="row"><time datetime="2027-04-19">Apr 19</time><span class="week-note">Race week</span></th><td>20 min</td><td>15 min</td><td class="long">13.1 mi</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="section-note"><a href="https://prod.nyrr.org/news/2024/02/15/half-marathon-training-faqs">Half-marathon training and fueling guidance</a></p>
+    </section>
+
+    <section class="guide" id="race-day" aria-labelledby="race-day-title">
+      <h2 id="race-day-title">Plan for the cutoff</h2>
+      <p>NYCRUNS lists a standard half-marathon limit of <strong>3 hours 30 minutes, about 16:00 per mile</strong>. The Brooklyn race page lists starts through 9:40 a.m. and an event end time of 12:30 p.m. Ask NYCRUNS how course closures apply to your wave and check the race guide when it’s released. <a href="https://nycruns.com/article/how-long-do-i-have-to-cross-the-finish-line">NYCRUNS time limits</a> · <a href="https://nycruns.com/race/nycruns-brooklyn-experience-half-marathon">Race details</a></p>
+      <p>Use elapsed pace from your rehearsals, including walk breaks and stops. If the standard limit applies to your wave, 15:00–15:30 per mile gives you roughly 7–13 minutes of room, provided that pace feels sustainable. Treat the pace examples below as planning estimates.</p>
+      <div class="table-frame">
+        <table aria-label="Half-marathon finish times at different elapsed paces">
+          <thead><tr><th scope="col">Elapsed pace</th><th scope="col">Approx. finish</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">14:30 / mi</th><td>3:10</td></tr>
+            <tr><th scope="row">15:00 / mi</th><td>3:17</td></tr>
+            <tr><th scope="row">15:30 / mi</th><td>3:23</td></tr>
+            <tr><th scope="row">16:00 / mi</th><td>3:30</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Decide after the Apr 11 long run</h3>
+      <p>Look for an easy finish to the long run, normal recovery and enough pace margin for your wave. If you’re still well short of the long-run distance or the cutoff pace takes a hard effort for several miles, consider a later race or one with more time on course.</p>
+      <h3>On race day</h3>
+      <p>Start the first two miles at an easy effort and use the walk breaks you practiced. Shorten your stride on the climb toward Prospect Park and stick with familiar fuel. Each of you can run your own pace and meet at a spot you’ve agreed on after the finish.</p>
+    </section>
+  </main>
+</body>
+</html>
