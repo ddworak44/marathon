@@ -1,9 +1,4 @@
-const offDaySteps = 'Optional goal of 15,000–20,000 total steps if that’s close to your usual activity.';
-const afterLongRun = ['', 'Recover after the long run', `${offDaySteps} Go lower if your legs are still tired.`];
-const midweekWalk = ['', 'Easy walking', offDaySteps];
-const rest = ['', 'Rest from running', offDaySteps];
-const beforeLongRun = ['', 'Easy day before the long run', `${offDaySteps} Keep the walking relaxed.`];
-const raceEve = ['', 'Rest before race day'];
+const stepDay = ['', '15,000 steps minimum'];
 const exampleMinutesPerMile = 16;
 const timed = (minutes, name, note) => {
   const miles = minutes.split('–').map(value => Number((Number(value) / exampleMinutesPerMile).toFixed(1))).join('–');
@@ -13,21 +8,18 @@ const timed = (minutes, name, note) => {
 const easy = (minutes, note) => timed(minutes, 'Easy run/walk', note);
 const long = (amount, note) => [amount, 'Long run/walk', note];
 const longByTime = (minutes, note) => timed(minutes, 'Long run/walk', note);
-const firstThursday = easy('15–20', 'Make this a brisk walk if you currently run once a week.');
 
 // Each row starts with its original Monday, which anchors the saved checkmarks.
 // Keep it fixed when editing a week. To reschedule, pass { weekOf: 'YYYY-MM-DD' } after the Sunday workout.
 const phases = [
   {
     id: 'base', title: 'Base', weeks: [
-      ['2026-11-23', 'Start run/walk', easy('15–20', 'Pick the interval and time range in How to start.'),
-        firstThursday, longByTime('20–30', 'Keep both the jogs and walks comfortable.')],
-      ['2026-11-30', 'Find your rhythm', easy('15–20'), firstThursday, longByTime('25–35')],
+      ['2026-11-23', 'Start run/walk', easy('15–20'), easy('15–20'), longByTime('20–30')],
+      ['2026-11-30', 'Find your rhythm', easy('15–20'), easy('15–20'), longByTime('25–35')],
       ['2026-12-07', 'Build time on feet', easy('20–25'), easy('15–20'), longByTime('30–40')],
       ['2026-12-14', 'Cutback', easy('15–20'), easy('15–20'), longByTime('25–30')],
       ['2026-12-21', 'Add time to Sunday', easy('20–25'), easy('20–25'), longByTime('35–45')],
-      ['2026-12-28', 'Get comfortable around 3 miles', easy('20–25'), easy('20–25'),
-        longByTime('40–50', 'Repeat a base week if 3 miles still feels like a stretch.')]
+      ['2026-12-28', 'Get comfortable around 3 miles', easy('20–25'), easy('20–25'), longByTime('40–50')]
     ]
   },
   {
@@ -54,9 +46,9 @@ const phases = [
       ['2027-03-22', 'Race rehearsal', easy('30–35'), easy('25–30'),
         ['6–7 mi', 'Race rehearsal', 'Use your race shoes, fuel and run/walk pattern on a gently rolling route. Time the middle 3–4 miles at a steady effort you could keep up.']],
       ['2027-03-29', 'Build to 9 miles', easy('35–40'), easy('30–35'),
-        long('8.5–9 mi', 'Cap the outing at 2½ hours, even if you’re short of the distance.')],
+        long('8.5–9 mi', 'Stop at 2½ hours.')],
       ['2027-04-05', 'Longest run', easy('30–35'), easy('25–30'),
-        long('9–10 mi', 'Aim for this distance if the build has gone well. Stop at 2½ hours and note your elapsed pace, how you finish and how you recover.')]
+        long('9–10 mi', 'Stop at 2½ hours. Record your elapsed pace for the race plan.')]
     ]
   },
   {
@@ -64,14 +56,14 @@ const phases = [
       ['2027-04-12', 'Reduce the distance', easy('25'), easy('20–25'), long('5–6 mi', 'Keep it relaxed.')],
       ['2027-04-19', 'Race week', easy('20'), easy('15'),
         ['13.1 mi', 'Brooklyn Experience Half Marathon',
-          'Start easy and use the walk breaks you practiced. Meet up at your agreed spot after the finish.'], { saturday: raceEve }]
+          'Start easy and use the walk breaks you practiced.']]
     ]
   }
 ];
 
 function scheduleWeek([originalWeekOf, label, tuesday, thursday, sunday, options = {}]) {
-  const { weekOf = originalWeekOf, saturday = beforeLongRun } = options;
-  const days = [afterLongRun, tuesday, midweekWalk, thursday, rest, saturday, sunday];
+  const { weekOf = originalWeekOf } = options;
+  const days = [stepDay, tuesday, stepDay, thursday, stepDay, stepDay, sunday];
 
   // The original workout dates match the keys already saved in browsers.
   const trackedDays = days.map(([amount, name, note], dayIndex) => {

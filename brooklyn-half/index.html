@@ -9,7 +9,7 @@
   <link rel="icon" href="../icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../half-training.css?v=3">
   <script src="../half-training.js?v=3" defer></script>
-  <script src="schedule.js?v=5" defer></script>
+  <script src="schedule.js?v=6" defer></script>
   <script src="steps.js" defer></script>
 </head>
 <body>
@@ -31,9 +31,8 @@
         <h2 id="schedule-title">Training schedule</h2>
         <a id="current-week" hidden>Jump to this week</a>
       </div>
-      <p class="section-note">Nov 23, 2026 to Apr 25, 2027. Easy run/walks on Tuesdays and Thursdays. Long runs on Sundays. If you move a long run to Saturday, use Sunday for recovery.</p>
+      <p class="section-note">Nov 23, 2026 to Apr 25, 2027. Easy run/walks on Tuesdays and Thursdays. Long runs on Sundays. Steps from work and errands count toward the daily minimum.</p>
       <p class="section-note">Follow the listed time on timed workouts. The mileage examples use a 16:00/mi elapsed pace, including walk breaks.</p>
-      <p class="section-note">On off days, aim for <strong>15,000–20,000 total steps</strong> if that’s close to your usual activity. Steps from work and errands count. Build gradually from your usual step count and take a lighter day when you need recovery. <a href="https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/walking/art-20047880">Setting step goals</a></p>
       <p class="completion-note" id="completion-status" role="status" hidden>Check off workouts as you go. Checkmarks are saved in this browser.</p>
       <nav class="phase-nav" aria-label="Training phases">
         <a href="#base">Base</a>
@@ -50,7 +49,7 @@
 
     <section class="guide" id="steps" aria-labelledby="steps-title">
       <h2 id="steps-title">Steps ↔ miles</h2>
-      <p id="steps-help">Edit either steps or miles to estimate the other. At the default of 2,000 steps per mile, 15,000–20,000 steps is roughly 7.5–10 miles of walking.</p>
+      <p id="steps-help">Edit steps or miles to convert using your steps per mile.</p>
       <div class="step-converter" role="group" aria-labelledby="steps-title" aria-describedby="steps-help">
         <label>Steps <input id="walk-steps" type="number" inputmode="numeric" min="0" step="1" value="15000" required></label>
         <label>Miles <input id="walk-miles" type="number" inputmode="decimal" min="0" step="any" value="7.5" required></label>
@@ -64,23 +63,22 @@
       <h2 id="start-title">Start where you are</h2>
       <dl class="starting-points">
         <div>
-          <dt>If a mile is your usual outing</dt>
-          <dd>Use the low end of the ranges. Try 30 seconds of easy jogging and 60–90 seconds of walking. If you currently run once a week, make Thursday a brisk walk for the first two weeks.</dd>
+          <dt>Usual outing around 1 mile</dt>
+          <dd>Use the low end of the ranges. Alternate 30 seconds of easy jogging with 60–90 seconds of walking.</dd>
         </div>
         <div>
-          <dt>If 2–3 miles already feel comfortable</dt>
-          <dd>Use the upper end if you’ve been running regularly and recovering well. Try 2 minutes of easy jogging and 1 minute of walking, or jog continuously if you can talk in full sentences.</dd>
+          <dt>Usual outing around 2–3 miles</dt>
+          <dd>Use the upper end of the ranges. Alternate 2 minutes of easy jogging with 1 minute of walking.</dd>
         </div>
       </dl>
-      <p>Start and finish each training outing with a few minutes of walking, included in the listed time or distance. If you’re using intervals, take walk breaks from the start. On a joint run, use a short loop and regroup each lap so both of you can stay at an easy effort.</p>
-      <p><strong>Adjust week by week.</strong> Cap long training runs at 2½ hours. If the long run feels overly hard or you’re still unusually sore by Tuesday, repeat the last comfortable week or shorten the next outing. Skip missed sessions and carry on from a distance you’ve handled. Stop a run if pain changes your stride, and get persistent pain checked.</p>
+      <p>Start and finish each training run with a few minutes of walking, included in the listed time or distance. Keep the running segments conversational. Cap long training runs at 2½ hours.</p>
       <p><a href="https://www.jeffgalloway.com/training/half-marathon-training/">Run/walk training guidance</a> · <a href="https://prod.nyrr.org/news/2024/02/15/half-marathon-training-faqs">Training and fueling guidance</a></p>
     </section>
 
     <section class="guide" id="race-day" aria-labelledby="race-day-title">
       <h2 id="race-day-title">Plan for the cutoff</h2>
       <p>NYCRUNS lists a standard half-marathon limit of <strong>3 hours 30 minutes, about 16:00 per mile</strong>. The Brooklyn race page lists starts through 9:40 a.m. and an event end time of 12:30 p.m. Ask NYCRUNS how course closures apply to your wave and check the race guide when it’s released. <a href="https://nycruns.com/article/how-long-do-i-have-to-cross-the-finish-line">NYCRUNS time limits</a> · <a href="https://nycruns.com/race/nycruns-brooklyn-experience-half-marathon">Race details</a></p>
-      <p>Use elapsed pace from your rehearsals, including walk breaks and stops. If the standard limit applies to your wave, 15:00–15:30 per mile gives you roughly 7–13 minutes of room, provided that pace feels sustainable. Treat the pace examples below as planning estimates.</p>
+      <p>Use elapsed pace from your rehearsals, including walk breaks and stops. Against the standard limit, 15:00–15:30 per mile gives you roughly 7–13 minutes of room.</p>
       <table class="pace-table" aria-label="Half-marathon finish times at different elapsed paces">
         <thead><tr><th scope="col">Elapsed pace</th><th scope="col">Approx. finish</th></tr></thead>
         <tbody>
@@ -91,7 +89,7 @@
         </tbody>
       </table>
       <h3>Decide after the Apr 11 long run</h3>
-      <p>Look for an easy finish to the long run, normal recovery and enough pace margin for your wave. If you’re still well short of the long-run distance or the cutoff pace takes a hard effort for several miles, consider a later race or one with more time on course.</p>
+      <p>Use your Apr 11 elapsed pace and your start wave’s cutoff to plan race day.</p>
       <h3>On race day</h3>
       <p>Start the first two miles at an easy effort and use the walk breaks you practiced. Shorten your stride on the climb toward Prospect Park and stick with familiar fuel. Each of you can run your own pace and meet at a spot you’ve agreed on after the finish.</p>
     </section>
