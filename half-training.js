@@ -7,6 +7,7 @@ function renderHalfTraining({ openingDay, phases, summarizeWeek, formatAmount = 
   const isoDate = timestamp => new Date(timestamp).toISOString().slice(0, 10);
 
   let start = openingDay;
+  let firstWeek = true;
   let currentWeekId;
   const schedule = document.getElementById('weeks');
 
@@ -18,26 +19,26 @@ function renderHalfTraining({ openingDay, phases, summarizeWeek, formatAmount = 
     section.setAttribute('aria-labelledby', `${id}-title`);
     section.innerHTML = `<h3 id="${id}-title">${title}</h3>`;
 
-    for (const [label, days] of weeks) {
-      const end = start + (days.length - 1) * dayMs;
-      const current = start <= today && today <= end;
+    for (const [label, days, weekStart = start] of weeks) {
+      const end = weekStart + (days.length - 1) * dayMs;
+      const current = weekStart <= today && today <= end;
       const week = document.createElement('details');
-      week.id = `week-${isoDate(start)}`;
-      week.open = current || (today < openingDay && start === openingDay);
+      week.id = `week-${isoDate(weekStart)}`;
+      week.open = current || (today < weekStart && firstWeek);
       if (current) {
         week.className = 'current';
         currentWeekId = week.id;
       }
 
       const summary = summarizeWeek(days);
-      const workouts = days.map(([amount, name, note], index) => {
-        const date = start + index * dayMs;
+      const workouts = days.map(([amount, name, note, completionId], index) => {
+        const date = weekStart + index * dayMs;
         const workoutDate = isoDate(date);
         const amountLabel = `<span class="distance">${amount ? formatAmount(amount) : ''}</span>`;
         const actions = completionStorageKey && amount
           ? `<div class="workout-actions">${amountLabel}
               <label class="workout-toggle">
-                <input type="checkbox" data-workout-date="${workoutDate}"
+                <input type="checkbox" data-workout-id="${completionId ?? workoutDate}"
                   aria-label="Complete ${name} on ${dateLabel.format(date)}">
                 <span aria-hidden="true">✓</span>
               </label>
@@ -51,12 +52,13 @@ function renderHalfTraining({ openingDay, phases, summarizeWeek, formatAmount = 
       }).join('');
 
       week.innerHTML = `<summary>
-          <span class="week-dates">${dateLabel.formatRange(start, end)}<span class="week-label">${current ? 'This week · ' : ''}${label}</span></span>
+          <span class="week-dates">${dateLabel.formatRange(weekStart, end)}<span class="week-label">${current ? 'This week · ' : ''}${label}</span></span>
           <span class="week-total">${summary}</span>
         </summary>
         <ul class="workouts">${workouts}</ul>`;
       section.append(week);
       start = end + dayMs;
+      firstWeek = false;
     }
 
     schedule.append(section);
@@ -75,11 +77,11 @@ function renderHalfTraining({ openingDay, phases, summarizeWeek, formatAmount = 
 }
 
 function bindWorkoutCompletion(schedule, storageKey) {
-  const selector = 'input[data-workout-date]';
+  const selector = 'input[data-workout-id]';
   const toggles = schedule.querySelectorAll(selector);
   const status = document.getElementById('completion-status');
   const prefix = `${storageKey}:`;
-  const keyFor = toggle => prefix + toggle.dataset.workoutDate;
+  const keyFor = toggle => prefix + toggle.dataset.workoutId;
   const showStorageError = () => {
     status.textContent = 'This browser could not save your checkmarks. They will stay visible during this visit.';
   };
