@@ -9,7 +9,7 @@
   <link rel="icon" href="../icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../half-training.css?v=3">
   <script src="../half-training.js?v=2" defer></script>
-  <script src="schedule.js?v=3" defer></script>
+  <script src="schedule.js?v=4" defer></script>
   <script src="steps.js" defer></script>
 </head>
 <body>
@@ -32,7 +32,8 @@
         <a id="current-week" hidden>Jump to this week</a>
       </div>
       <p class="section-note">Nov 23, 2026 to Apr 25, 2027. Easy run/walks on Tuesdays and Thursdays. Long runs on Sundays. If you move a long run to Saturday, use Sunday for recovery.</p>
-      <p class="section-note">Follow the listed time on timed workouts. The mileage examples use a 16:00/mi elapsed pace, including walk breaks. Optional walks show steps at the 2,000 steps/mile default.</p>
+      <p class="section-note">Follow the listed time on timed workouts. The mileage examples use a 16:00/mi elapsed pace, including walk breaks.</p>
+      <p class="section-note">On off days, aim for <strong>15,000–20,000 total steps</strong> if that’s close to your usual activity. Steps from work and errands count. Build gradually from your usual step count and take a lighter day when you need recovery. <a href="https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/walking/art-20047880">Setting step goals</a></p>
       <p class="completion-note" id="completion-status" role="status" hidden>Check off workouts as you go. Checkmarks are saved in this browser.</p>
       <nav class="phase-nav" aria-label="Training phases">
         <a href="#base">Base</a>
@@ -49,13 +50,13 @@
 
     <section class="guide" id="steps" aria-labelledby="steps-title">
       <h2 id="steps-title">Steps ↔ miles</h2>
-      <p id="steps-help">Edit either steps or miles to estimate the other. The default of 2,000 steps per mile is a rough walking estimate.</p>
+      <p id="steps-help">Edit either steps or miles to estimate the other. At the default of 2,000 steps per mile, 15,000–20,000 steps is roughly 7.5–10 miles of walking.</p>
       <div class="step-converter" role="group" aria-labelledby="steps-title" aria-describedby="steps-help">
-        <label>Steps <input id="walk-steps" type="number" inputmode="numeric" min="0" step="1" value="2000" required></label>
-        <label>Miles <input id="walk-miles" type="number" inputmode="decimal" min="0" step="any" value="1" required></label>
+        <label>Steps <input id="walk-steps" type="number" inputmode="numeric" min="0" step="1" value="15000" required></label>
+        <label>Miles <input id="walk-miles" type="number" inputmode="decimal" min="0" step="any" value="7.5" required></label>
         <label>Steps per mile <input id="steps-per-mile" type="number" inputmode="numeric" min="1" step="1" value="2000" required></label>
       </div>
-      <output class="converter-result" id="step-result" for="walk-steps walk-miles steps-per-mile">2,000 steps ≈ 1 mi</output>
+      <output class="converter-result" id="step-result" for="walk-steps walk-miles steps-per-mile">15,000 steps ≈ 7.5 mi</output>
       <p>For a personal estimate, count your steps on a measured half-mile walk and double that count for the Steps per mile field. <a href="https://www.cdc.gov/diabetes/professional-info/pdfs/toolkits/Activities-Guide-508.pdf">CDC walking guide</a></p>
     </section>
 

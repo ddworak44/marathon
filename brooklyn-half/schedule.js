@@ -1,7 +1,8 @@
-const afterLongRun = ['', 'Rest after the long run'];
-const midweekWalk = ['', 'Optional recovery walk', '0.5–1 mi at a relaxed pace · about 1,000–2,000 steps.'];
-const rest = ['', 'Rest'];
-const shortWalk = ['', 'Optional short walk', 'About 0.5 mi · roughly 1,000 steps.'];
+const offDaySteps = 'Optional goal of 15,000–20,000 total steps if that’s close to your usual activity.';
+const afterLongRun = ['', 'Recover after the long run', `${offDaySteps} Go lower if your legs are still tired.`];
+const midweekWalk = ['', 'Easy walking', offDaySteps];
+const rest = ['', 'Rest from running', offDaySteps];
+const beforeLongRun = ['', 'Easy day before the long run', `${offDaySteps} Keep the walking relaxed.`];
 const raceEve = ['', 'Rest before race day'];
 const exampleMinutesPerMile = 16;
 const timed = (minutes, name, note) => {
@@ -69,7 +70,7 @@ const phases = [
 const calendar = phases.map(({ id, title, weeks }) => ({
   id,
   title,
-  weeks: weeks.map(([label, tuesday, thursday, sunday, saturday = shortWalk]) => [
+  weeks: weeks.map(([label, tuesday, thursday, sunday, saturday = beforeLongRun]) => [
     label, [afterLongRun, tuesday, midweekWalk, thursday, rest, saturday, sunday]
   ])
 }));
