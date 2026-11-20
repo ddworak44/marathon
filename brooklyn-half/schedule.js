@@ -1,19 +1,30 @@
-const rest = ['', 'Rest or easy walk'];
-const easy = (minutes, note) => [`${minutes} min`, 'Easy run/walk', note];
+const afterLongRun = ['', 'Rest after the long run'];
+const midweekWalk = ['', 'Optional recovery walk', '0.5–1 mi at a relaxed pace · about 1,000–2,000 steps.'];
+const rest = ['', 'Rest'];
+const shortWalk = ['', 'Optional short walk', 'About 0.5 mi · roughly 1,000 steps.'];
+const raceEve = ['', 'Rest before race day'];
+const exampleMinutesPerMile = 16;
+const timed = (minutes, name, note) => {
+  const miles = minutes.split('–').map(value => Number((Number(value) / exampleMinutesPerMile).toFixed(1))).join('–');
+  const estimate = `≈ ${miles} mi.`;
+  return [`${minutes} min`, name, note ? `${estimate} ${note}` : estimate];
+};
+const easy = (minutes, note) => timed(minutes, 'Easy run/walk', note);
 const long = (amount, note) => [amount, 'Long run/walk', note];
+const longByTime = (minutes, note) => timed(minutes, 'Long run/walk', note);
 const firstThursday = easy('15–20', 'Make this a brisk walk if you currently run once a week.');
 
 const phases = [
   {
     id: 'base', title: 'Base', weeks: [
       ['Start run/walk', easy('15–20', 'Pick the interval and time range in How to start.'),
-        firstThursday, long('20–30 min', 'Keep both the jogs and walks comfortable.')],
-      ['Find your rhythm', easy('15–20'), firstThursday, long('25–35 min')],
-      ['Build time on feet', easy('20–25'), easy('15–20'), long('30–40 min')],
-      ['Cutback', easy('15–20'), easy('15–20'), long('25–30 min')],
-      ['Add time to Sunday', easy('20–25'), easy('20–25'), long('35–45 min')],
+        firstThursday, longByTime('20–30', 'Keep both the jogs and walks comfortable.')],
+      ['Find your rhythm', easy('15–20'), firstThursday, longByTime('25–35')],
+      ['Build time on feet', easy('20–25'), easy('15–20'), longByTime('30–40')],
+      ['Cutback', easy('15–20'), easy('15–20'), longByTime('25–30')],
+      ['Add time to Sunday', easy('20–25'), easy('20–25'), longByTime('35–45')],
       ['Get comfortable around 3 miles', easy('20–25'), easy('20–25'),
-        long('40–50 min', 'Repeat a base week if 3 miles still feels like a stretch.')]
+        longByTime('40–50', 'Repeat a base week if 3 miles still feels like a stretch.')]
     ]
   },
   {
@@ -50,17 +61,16 @@ const phases = [
       ['Reduce the distance', easy('25'), easy('20–25'), long('5–6 mi', 'Keep it relaxed.')],
       ['Race week', easy('20'), easy('15'),
         ['13.1 mi', 'Brooklyn Experience Half Marathon',
-          'Start easy and use the walk breaks you practiced. Meet up at your agreed spot after the finish.']]
+          'Start easy and use the walk breaks you practiced. Meet up at your agreed spot after the finish.'], raceEve]
     ]
   }
 ];
 
-// The plan lists Tuesday, Thursday and Sunday workouts. Show recovery on the other days.
 const calendar = phases.map(({ id, title, weeks }) => ({
   id,
   title,
-  weeks: weeks.map(([label, tuesday, thursday, sunday]) => [
-    label, [rest, tuesday, rest, thursday, rest, rest, sunday]
+  weeks: weeks.map(([label, tuesday, thursday, sunday, saturday = shortWalk]) => [
+    label, [afterLongRun, tuesday, midweekWalk, thursday, rest, saturday, sunday]
   ])
 }));
 

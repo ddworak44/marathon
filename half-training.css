@@ -169,6 +169,28 @@ details[open] summary::after { transform: translateY(2px) rotate(225deg); }
 .starting-points div + div { margin-top: .75rem; }
 .starting-points dt { font-weight: 700; }
 .starting-points dd { margin: .15rem 0 0; color: var(--muted); }
+.step-converter {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+  margin-top: .9rem;
+}
+.step-converter label { font-size: .875rem; font-weight: 650; }
+.step-converter input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin-top: .25rem;
+  padding: .5rem .65rem;
+  border: 1px solid #676775;
+  border-radius: .55rem;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+.converter-result { display: block; margin-top: .75rem; color: var(--accent); font-weight: 700; }
 .pace-table { width: 100%; margin-top: .9rem; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 .pace-table th, .pace-table td { padding: .45rem .35rem; border-bottom: 1px solid var(--line); text-align: left; }
 .pace-table thead { color: var(--muted); font-size: .875rem; }
@@ -177,6 +199,8 @@ details[open] summary::after { transform: translateY(2px) rotate(225deg); }
   .workout { grid-template-columns: 3.4rem minmax(0, 1fr) auto; gap: .5rem; }
   .workout time span { display: block; }
   .workout-actions { flex-direction: column; align-items: flex-end; gap: 0; }
+  .step-converter { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .step-converter label:last-child { grid-column: 1 / -1; }
   .efforts { grid-template-columns: 1fr; gap: .2rem; }
   .efforts dd + dt { margin-top: .5rem; }
 }

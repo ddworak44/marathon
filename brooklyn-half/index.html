@@ -7,9 +7,10 @@
   <meta name="description" content="A 22-week beginner run/walk training plan for the April 25, 2027 NYCRUNS Brooklyn Experience Half Marathon.">
   <title>Brooklyn Experience Half Training | Marathon</title>
   <link rel="icon" href="../icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../half-training.css?v=2">
+  <link rel="stylesheet" href="../half-training.css?v=3">
   <script src="../half-training.js?v=2" defer></script>
-  <script src="schedule.js?v=2" defer></script>
+  <script src="schedule.js?v=3" defer></script>
+  <script src="steps.js" defer></script>
 </head>
 <body>
   <nav class="site-nav" aria-label="Training plans"><a href="../index.html">Marathon training</a></nav>
@@ -30,18 +31,32 @@
         <h2 id="schedule-title">Training schedule</h2>
         <a id="current-week" hidden>Jump to this week</a>
       </div>
-      <p class="section-note">Nov 23, 2026 to Apr 25, 2027. Run or run/walk easy on Tuesdays and Thursdays, with a longer run/walk on Sundays. You can move the long run to Saturday if that fits better. Keep at least one day between runs.</p>
+      <p class="section-note">Nov 23, 2026 to Apr 25, 2027. Easy run/walks on Tuesdays and Thursdays. Long runs on Sundays. If you move a long run to Saturday, use Sunday for recovery.</p>
+      <p class="section-note">Follow the listed time on timed workouts. The mileage examples use a 16:00/mi elapsed pace, including walk breaks. Optional walks show steps at the 2,000 steps/mile default.</p>
       <p class="completion-note" id="completion-status" role="status" hidden>Check off workouts as you go. Checkmarks are saved in this browser.</p>
       <nav class="phase-nav" aria-label="Training phases">
         <a href="#base">Base</a>
         <a href="#endurance">Build</a>
         <a href="#rehearse">Race prep</a>
         <a href="#taper">Taper</a>
+        <a href="#steps">Steps ↔ miles</a>
         <a href="#start">How to start</a>
         <a href="#race-day">Race pace and cutoff</a>
       </nav>
       <div id="weeks"></div>
       <noscript><p>Enable JavaScript to view the daily schedule.</p></noscript>
+    </section>
+
+    <section class="guide" id="steps" aria-labelledby="steps-title">
+      <h2 id="steps-title">Steps ↔ miles</h2>
+      <p id="steps-help">Edit either steps or miles to estimate the other. The default of 2,000 steps per mile is a rough walking estimate.</p>
+      <div class="step-converter" role="group" aria-labelledby="steps-title" aria-describedby="steps-help">
+        <label>Steps <input id="walk-steps" type="number" inputmode="numeric" min="0" step="1" value="2000" required></label>
+        <label>Miles <input id="walk-miles" type="number" inputmode="decimal" min="0" step="any" value="1" required></label>
+        <label>Steps per mile <input id="steps-per-mile" type="number" inputmode="numeric" min="1" step="1" value="2000" required></label>
+      </div>
+      <output class="converter-result" id="step-result" for="walk-steps walk-miles steps-per-mile">2,000 steps ≈ 1 mi</output>
+      <p>For a personal estimate, count your steps on a measured half-mile walk and double that count for the Steps per mile field. <a href="https://www.cdc.gov/diabetes/professional-info/pdfs/toolkits/Activities-Guide-508.pdf">CDC walking guide</a></p>
     </section>
 
     <section class="guide" id="start" aria-labelledby="start-title">
